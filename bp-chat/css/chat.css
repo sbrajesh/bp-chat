@@ -1,0 +1,322 @@
+/* general classes*/
+.clear{clear:both;}
+/*for the bottom chat bar*/
+.bc_block{display:block;}
+/* bottom chat bar*/
+.bp_chatbar{
+	
+	color:#fff;
+	
+	padding:0;
+	position:fixed;/* wont work in ie*/
+        bottom:0;
+	right:0;
+	width:100%;
+        height:25px;
+	z-index:1000;
+	background:url(../images/bg.gif) repeat;
+       
+}
+.bp_chatbar .disabled{display:none;}
+
+.open_toggler{z-index:100;}/* class for toggling the chat window*/
+
+#bp_chat_base{
+    float:right;
+    left:auto;
+    position:relative;
+    border-color:#999999;
+    border-style:solid;
+    border-width:1px 1px 0 0;
+}
+
+
+.chat_tabs_slider{
+    float:left;
+    position:relative;
+}
+
+.active_chat_tabs_wrapper{
+    float:left;
+    position:relative;
+}
+.active_chat_tabs{
+        position:static;
+        float:left;
+}
+.chat_tab{
+    float:left;
+    position:relative;
+    top:-1px;
+}
+
+/* tab button at the chat bar*/
+.chat_button{
+    border:1px solid #999;
+    border-width: 1px 0px 0px 1px;
+    color:#333333;
+    display:block;
+    font-weight:bold;
+    height:16px;
+    padding:4px 5px;
+    position:relative;
+    z-index:10;
+    cursor: pointer;
+}
+.rule{
+   
+    margin-top:-5px;
+    padding-top:4px;
+    position:relative;
+}
+
+.tab_content{
+   padding:1px 0 0;
+   position:relative;
+}
+
+.chat_tab .close{
+   
+    position:absolute;
+    right:0;
+    cursor:pointer;
+}
+.chat_tab .close span{display: block;
+cursor:pointer;
+}
+
+/* when chat box is open*/
+.open_toggler .chat_button{
+    background:none repeat scroll 0 0 #FFFFFF;
+    border-color:#777777;
+    border-right-width:1px;
+    border-top-width:0;
+    margin-right:-1px;
+    padding:5px;
+}
+/*chat box*/
+.chat_window{
+    background-color:#FFFFFF;
+    border-bottom:1px solid #777777;
+    bottom:25px;
+    display:none;
+    position:absolute;
+    width:228px;
+    left:auto;
+    right:-1px;
+}
+.open_toggler .chat_window{display: block;}
+/*for buddylist*/
+.win_titlebar{
+    
+    background-color:#2B3C67;
+    border-color:#254588 #254588;
+    border-style:solid solid none;
+    border-width:1px 1px 0;
+    color:#FFFFFF;
+    cursor:pointer;
+    font-size:11px;
+    font-weight:bold;
+    padding:3px 3px 3px 8px;
+    position:relative;
+}
+.win_titlebar .close{
+   padding:0px 5px;
+   float:right;
+}
+.win_titlebar .minimize{float:right;
+    height:14px;
+    padding:0 7px;
+    width:9px;
+}
+.win_title_text{
+    float:left;
+    margin-left:40px;/*55px;*/
+    padding:0;
+}
+.win_title_text a{
+    color:#FFFFFF;
+    font-weight:bold;
+    padding:0;
+}
+.win_header,.win_footer,.win_body{
+    border-color:#777777;
+    border-style:solid;
+    border-width:0 1px;
+    position:relative;
+}
+.win_header_image_link{
+    height:auto;
+    left:5px;
+    position:absolute;
+    top:-17px;
+    width:auto;
+}
+.win_header_info{
+    background:#F6F6F6;
+    min-height:28px;
+    padding:2px 0 2px 50px;
+   /* width:176px;*/
+    color:#000;
+}
+.chat_tab .win_body{
+    color:#000000;
+    overflow-x:hidden;
+    overflow-y:auto;
+    position:relative;
+    height:160px;
+}
+.win_content{
+    padding:5px;
+    padding-bottom:3px;
+}
+.win_content .msg{text-align:left;}
+.win_content > div{
+    padding-left:5px;
+    
+}
+.chat_input_div{
+    border-top:1px solid #93A2C1;
+    padding:0;
+}
+
+.chat_input{
+    border:0 none;
+    margin:0;
+    padding:4px;
+    width: 198px;
+    min-height: 13px;
+}
+.chat_send_message_btn{
+    position: absolute;
+    bottom: 0;
+   right: 0;
+}
+/* chat settings window*/
+.chat_buddylist{
+    float:right;
+    margin-right:10px;
+    width:200px;
+}
+.chat_buddylist .chat_window{width:201px;}
+.chat_buddylist .chat_tab{float:none;}
+
+
+/* friend list*/
+div.friend_list_item{
+   
+    border-bottom:1px solid #FFFFFF;
+    border-top:1px solid #FFFFFF;
+}
+
+div.friend_list_item a.online_friend{display:block;cursor: pointer;padding:5px;}
+div.friend_list_item a.online_friend:hover{background:#ccc;}
+div.friend_list_item a.online_friend img.friend-avatar{float:left;margin-right:5px;border:none;}
+div.friend_list_item span.friend_list_item_name{float:left;line-height:22px;width:130px;}
+span.clear{clear:both;display:block;}
+span.user_name{font-weight:bold;}
+
+
+
+
+ /*************** Tool tip css from poshy Tip*****/
+ .tip-twitter {
+	opacity:0.8;
+	z-index:1000;
+	text-align:left;
+	border-radius:4px;
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
+	padding:8px 8px;
+	max-width:200px;
+	color:#fff;
+	background-color:#000;
+	/**
+	 * - If you set a background-image, border/padding/background-color will be ingnored.
+	 *   You can set any padding to .tip-inner instead if you need.
+	 * - If you want a tiled background-image and border/padding for the tip,
+	 *   set the background-image to .tip-inner instead.
+	 */
+}
+.tip-twitter .tip-inner {
+	font:bold 11px/14px 'Lucida Grande',sans-serif;
+}
+
+/* Configure an arrow image - the script will automatically position it on the correct side of the tip */
+.tip-twitter .tip-arrow-top {
+	margin-top:-5px;
+	margin-left:-5px; /* approx. half the width to center it */
+	top:0;
+	left:50%;
+	width:9px;
+	height:5px;
+	background:url(../images/tip-twitter_arrows.gif) no-repeat;
+}
+.tip-twitter .tip-arrow-right {
+	margin-top:-4px; /* approx. half the height to center it */
+	margin-left:0;
+	top:50%;
+	left:100%;
+	width:5px;
+	height:9px;
+	background:url(../images/tip-twitter_arrows.gif) no-repeat -9px 0;
+}
+.tip-twitter .tip-arrow-bottom {
+	margin-top:0;
+	margin-left:-5px; /* approx. half the width to center it */
+	top:100%;
+	left:50%;
+	width:9px;
+	height:5px;
+	background:url(../images/tip-twitter_arrows.gif) no-repeat -18px 0;
+}
+.tip-twitter .tip-arrow-left {
+	margin-top:-4px; /* approx. half the height to center it */
+	margin-left:-5px;
+	top:50%;
+	left:0;
+	width:5px;
+	height:9px;
+	background:url(../images/tip-twitter_arrows.gif) no-repeat -27px 0;
+}
+
+.chat_buddy_list_settings{
+    background:#fff;
+    border: 1px solid #888;
+    height:70px;
+    color:#333;
+    
+    left:-20px;
+    position:absolute;
+
+    padding:5px;
+    width:200px;
+    z-index:2000;
+}
+.chat_buddy_list_settings li a{
+    color:#333;
+}
+.chat_buddy_list_settings li a.chat_option_active{
+    font-weight:bold;
+    font-size: 13px;
+}
+/*default status make online*/
+ span.tab_name{
+   background: url("../images/green.png") no-repeat scroll 100% 50% transparent;
+    padding-right: 10px;
+}
+.rule span.user_offline{
+  background: url("../images/offline.png") no-repeat scroll 100% 50% transparent;
+
+}
+.rule span.user_online{
+ background: url("../images/green.png") no-repeat scroll 100% 50% transparent;
+
+}
+.rule span.user_idle{
+ background: url("../images/idle.png") no-repeat scroll 100% 50% transparent;
+  
+}
+#chat_buddylist span.tab_name{
+    background: transparent;
+}
