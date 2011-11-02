@@ -10,8 +10,6 @@ Tested up to: WP 3.1, BuddyPress 1.2.8
 Author: Brajesh Singh
 Author URI: http://buddydev.com/members/sbrajesh
 */
-//Site Wide Only: true
-//Network: true
 
 define ( 'BP_CHAT_IS_INSTALLED', 1 );
 define ( 'BP_CHAT_VERSION', '1.0' );

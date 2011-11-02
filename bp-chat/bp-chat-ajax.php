@@ -103,7 +103,7 @@ function bpchat_request_channel_reopen(){
 function bpchat_save_messages() {
     global $wpdb, $bp;
     $new_message = new BPChat_Messages();
-    $new_message->message = $_POST["message"];
+    $new_message->message = esc_html($_POST["message"]);
     $new_message->channel_id = $_POST["channel_id"];
     $new_message->sender_id = $bp->loggedin_user->id;
     
