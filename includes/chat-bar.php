@@ -105,14 +105,17 @@ if(bpchat_is_disabled ())
                                            <span>-</span>
                                      </label>
                                      <div class="win_title_text">
+                                         <?php if(bpchat_show_user_preference()):?>
                                          <a class="win_title_text_link" id="win_title_text_link_settings" href="#">Chat Options</a>
                                          <div class="disabled chat_buddy_list_settings" id="chat_buddylist_settings">
+                                             
                                              <ul>
                                                  <li><a href="#" class="sitewide_users <?php if(!bpchat_has_friends_only_enabled($bp->loggedin_user->id)):?> chat_option_active <?php endif;?>" id="sitewide_users"  >Sitewide</a></li>
                                                  <li><a href="#" class="friend_users <?php if(bpchat_has_friends_only_enabled($bp->loggedin_user->id)):?> chat_option_active <?php endif;?>" id="friend_users">Friends Only</a></li>
                                              </ul>
-
+                                            
                                          </div>
+                                          <?php endif;?>
                                      </div>
                                      <div class="clear"></div>
                                  </div>

@@ -170,7 +170,10 @@ cursor:pointer;
     padding:5px;
     padding-bottom:3px;
 }
-.win_content .msg{text-align:left;}
+.win_content .msg{
+    text-align:left;
+    word-wrap:break-word;
+}
 .win_content > div{
     padding-left:5px;
     

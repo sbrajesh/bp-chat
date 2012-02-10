@@ -222,7 +222,7 @@ class BPChat_Messages {
     var $sent_at;
     
 
-    function bpchat_messages($id=null) {
+    function __construct($id=null) {
         if ($id) {
             $this->id = $id;
             $this->populate($this->id);
@@ -236,7 +236,7 @@ class BPChat_Messages {
             $this->id=$row->id;
             $this->sender_id = $row->sender_id;
             $this->channel_id = $row->channel_id;
-            $this->message = $row->message;
+            $this->message = esc_js($row->message);
 
             $this->sent_at = $row->sent_at;
            
@@ -568,4 +568,26 @@ var $title;//the title of the channel, may be chatting with xyz or group chat  o
       $channel_id=$wpdb->get_var($wpdb->prepare($query));
       return $channel_id;
   }
+   //set status for user channel to be open
+function keep_channels_open($channels,$user_id){
+        global $wpdb,$bp;
+        if(empty($channels))
+            return;
+        $channel_list="(".join(",", $channels).")";
+        $query="UPDATE {$bp->chat->table_channel_users} SET status='open' WHERE channel_id IN {$channel_list} AND user_id=%d";
+        $wpdb->query($wpdb->prepare($query,$user_id));
+
+    }
+    
+     function find_channels_in_message($messages){
+        $channels=array();
+        $message_count=count($messages);
+        for($i=0;$i<$message_count;$i++)
+         $channels[]=$messages[$i]->channel_id;
+
+        return array_unique($channels);//unique channels
+      }
+      
 }
+
+?>

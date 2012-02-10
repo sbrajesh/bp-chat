@@ -18,7 +18,7 @@ bpchat_channel_status=new Array();//global object used for channel status on cur
 var ChatSettings={
  update_online_count: function(){
 	jQuery.post(ajaxurl, {
-                            action: 'get_online_users_count',
+                            action: 'bpchat_get_online_users_count',
                             'cookie': encodeURIComponent(document.cookie)
                             },
                       function(ret){
@@ -29,7 +29,7 @@ var ChatSettings={
     },
 update_online_list: function(){
         ChatHelper.reset_intervals();
-            ChatSettings.update_online_users_list({action: 'update_online_users_list', 'cookie': encodeURIComponent(document.cookie),output:'html',value: 0, fetch: 1});
+            ChatSettings.update_online_users_list({action: 'bpchat_update_online_users_list', 'cookie': encodeURIComponent(document.cookie),output:'html',value: 0, fetch: 1});
 },
 
 update_online_users_list: function(obj){
@@ -41,7 +41,7 @@ update_online_users_list: function(obj){
 check_chat_init: function(){
 
     	jQuery.post(ajaxurl, {
-                        action: "chat_check_updates",
+                        action: "bpchat_check_updates",
                         'fetch_time':ChatSettings.get_fetch_time(),
                         'cookie': encodeURIComponent(document.cookie)},
 
@@ -138,7 +138,8 @@ var ChatHelper={
             this.clear_intervals();
             this.set_intervals();
             },
-
+            
+            
     store_message:function(msg_id){
             //store the currently read message id
             var message_ids=jQuery("#mesage_store").val();//existing values
@@ -333,7 +334,7 @@ create_chat_box:function(for_user){
     var friend_avatar_src=ChatSettings.get_avatar_src(friend);
   
     jQuery.post(ajaxurl, {
-                action: 'request_channel',
+                action: 'bpchat_request_channel',
                 'user_id': friend_id,
                 'cookie': encodeURIComponent(document.cookie)
                 },
@@ -358,7 +359,7 @@ reopen_closed_chat_box: function(win_id){
         var win=jQuery(win_id);
         var channel_id=ChatSettings.get_id(win);
     jQuery.post(ajaxurl, {
-                action: 'request_channel_reopen',
+                action: 'bpchat_request_channel_reopen',
                 'channel_id': channel_id,
                 'cookie': encodeURIComponent(document.cookie)
                 },
@@ -420,10 +421,58 @@ jQuery(".win_content",channel).append('<div class="notice"><span class="user_nam
 jQuery(function(){
  
  var j=jQuery;
+ 
+ /*check for Paul Irish's Idle Timer plugin*/
+ /*!
+ * jQuery idleTimer plugin
+ * version 0.9.100511
+ * by Paul Irish.
+ *   http://github.com/paulirish/yui-misc/tree/
+ * MIT license
+
+ * adapted from YUI idle timer by nzakas:
+ *   http://github.com/nzakas/yui-misc/
+*/
+if(!j.idleTimer){
+    (function(a){a.idleTimer=function(b,c){var d=false,e=true,f=3e4,g="mousemove keydown DOMMouseScroll mousewheel mousedown touchstart touchmove";c=c||document;var h=function(b){if(typeof b==="number"){b=undefined}var d=a.data(b||c,"idleTimerObj");d.idle=!d.idle;var g=+(new Date)-d.olddate;d.olddate=+(new Date);if(d.idle&&g<f){d.idle=false;clearTimeout(a.idleTimer.tId);if(e)a.idleTimer.tId=setTimeout(h,f);return}var i=jQuery.Event(a.data(c,"idleTimer",d.idle?"idle":"active")+".idleTimer");a(c).trigger(i)},i=function(b){var c=a.data(b,"idleTimerObj")||{};c.enabled=false;clearTimeout(c.tId);a(b).off(".idleTimer")},j=function(){var b=a.data(this,"idleTimerObj");clearTimeout(b.tId);if(b.enabled){if(b.idle){h(this)}b.tId=setTimeout(h,b.timeout)}};var k=a.data(c,"idleTimerObj")||{};k.olddate=k.olddate||+(new Date);if(typeof b==="number"){f=b}else if(b==="destroy"){i(c);return this}else if(b==="getElapsedTime"){return+(new Date)-k.olddate}a(c).on(a.trim((g+" ").split(" ").join(".idleTimer ")),j);k.idle=d;k.enabled=e;k.timeout=f;k.tId=setTimeout(h,k.timeout);a.data(c,"idleTimer","active");a.data(c,"idleTimerObj",k)};a.fn.idleTimer=function(b){if(this[0]){a.idleTimer(b,this[0])}return this}})(jQuery);
+
+}
+
+//jQuery Placeholder plugin
+if(!j.placeholder){
+    /*! http://mths.be/placeholder v1.8.7 by @mathias */
+(function(f,h,c){var a='placeholder' in h.createElement('input'),d='placeholder' in h.createElement('textarea'),i=c.fn,j;if(a&&d){j=i.placeholder=function(){return this};j.input=j.textarea=true}else{j=i.placeholder=function(){return this.filter((a?'textarea':':input')+'[placeholder]').not('.placeholder').bind('focus.placeholder',b).bind('blur.placeholder',e).trigger('blur.placeholder').end()};j.input=a;j.textarea=d;c(function(){c(h).delegate('form','submit.placeholder',function(){var k=c('.placeholder',this).each(b);setTimeout(function(){k.each(e)},10)})});c(f).bind('unload.placeholder',function(){c('.placeholder').val('')})}function g(l){var k={},m=/^jQuery\d+$/;c.each(l.attributes,function(o,n){if(n.specified&&!m.test(n.name)){k[n.name]=n.value}});return k}function b(){var k=c(this);if(k.val()===k.attr('placeholder')&&k.hasClass('placeholder')){if(k.data('placeholder-password')){k.hide().next().show().focus().attr('id',k.removeAttr('id').data('placeholder-id'))}else{k.val('').removeClass('placeholder')}}}function e(){var o,n=c(this),k=n,m=this.id;if(n.val()===''){if(n.is(':password')){if(!n.data('placeholder-textinput')){try{o=n.clone().attr({type:'text'})}catch(l){o=c('<input>').attr(c.extend(g(this),{type:'text'}))}o.removeAttr('name').data('placeholder-password',true).data('placeholder-id',m).bind('focus.placeholder',b);n.data('placeholder-textinput',o).data('placeholder-id',m).before(o)}n=n.removeAttr('id').hide().prev().attr('id',m).show()}n.addClass('placeholder').val(n.attr('placeholder'))}else{n.removeClass('placeholder')}}}(this,document,jQuery));
+
+
+}
 
 var cb=ChatWindow;//chat Box object
  
  j(document).ready(function(){
+     
+     //check for libraries and include
+     
+     j.idleTimer(5000);
+    j(document).bind('idle.idleTimer', function(){
+     // function you want to fire when the user goes idle
+     //console.log("Document is idle...");
+     ChatHelper. clear_intervals();//do not send any extra request
+    });
+ 
+ 
+    j(document).bind('active.idleTimer', function(){
+     // function you want to fire when the user becomes active again
+     //please update the current settings and then set new interval
+    // console.log("Document is active...");
+     ChatSettings.check_chat_init();
+     ChatSettings.update_online_count();
+     
+     
+     ChatHelper.set_intervals();
+    });
+
+
+     
      //bind close button of chat window
    j(".active_chat_tabs .close_button span").live("click",function(evt){
        evt.stopPropagation();
@@ -432,7 +481,7 @@ var cb=ChatWindow;//chat Box object
        var channel_id = ChatSettings.get_id(window);//get the chat channel id
        cb.close(window);//close window
 
-       j.post(ajaxurl,{action:"close_channel",channel_id:channel_id},function(){
+       j.post(ajaxurl,{action:"bpchat_close_channel",channel_id:channel_id},function(){
              //do nothing here
              
          });
@@ -572,7 +621,7 @@ j(".chat_input").live('keydown',
                     j(this).val('');//empty current va;lue
 
                     j.post(ajaxurl,{
-                                    "action": 'save_chat_msg',
+                                    "action": 'bpchat_save_message',
                                     "channel_id": channel_id,
                                     "message": msg,
                                     'cookie': encodeURIComponent(document.cookie)
@@ -597,7 +646,7 @@ j(".chat_send_message_btn").live('click',
                    j(".chat_input",chat).val('');//empty current va;lue
 
                     j.post(ajaxurl,{
-                                    "action": 'save_chat_msg',
+                                    "action": 'bpchat_save_message',
                                     "channel_id": channel_id,
                                     "message": msg,
                                     'cookie': encodeURIComponent(document.cookie)
