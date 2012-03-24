@@ -19,10 +19,17 @@ class BPChatInstaller{
     function install(){
     global $wpdb, $bp;
     $sql=array();
+    $charset_collate='';
     //check if tables exist,
     //just update one table in that case
-        $charset_collate = bp_core_set_charset();
-	$bp_prefix = bp_core_get_table_prefix();
+    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+
+	/* BuddyPress component DB schema */
+	if ( !empty($wpdb->charset) )
+		$charset_collate= "DEFAULT CHARACTER SET $wpdb->charset";
+
+
+        $bp_prefix = bp_core_get_table_prefix();
     //install
     $sql_table_exists_check="SHOW TABLES LIKE '".$bp_prefix."_bp_chat_%'";
     if($wpdb->get_col($wpdb->prepare($sql_table_exists_check)))////just update the user table
