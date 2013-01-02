@@ -8,7 +8,7 @@ class BPChat_User {
     var $is_logged;
     var $status_message;
     
-    function bpchat_user($id=null) {
+    function __construct($id=null) {
         if ($id) {
             $this->id = $id;
             $this->populate($this->id);

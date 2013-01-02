@@ -54,7 +54,7 @@ class BPChatAjaxHelper{
         
         echo $channel_id;
             
-        die();
+        exit(0);
         
          
         }
@@ -72,7 +72,7 @@ class BPChatAjaxHelper{
         }
         echo $channel_id;
 
-            die();
+           exit(0);
     }
     
     /*
@@ -94,13 +94,13 @@ class BPChatAjaxHelper{
     function show_online_users_list() {
         echo bpchat_get_online_users_list();
 
-            die();//some day, I will add the chatbox to appear in the wp backend too
+           exit(0);//some day, I will add the chatbox to appear in the wp backend too
     }
     
     function show_online_users_count() {
         echo bpchat_get_online_users_count();
 
-            die();//some day, I will add the chatbox to appear in the wp backend too
+            exit(0);//some day, I will add the chatbox to appear in the wp backend too
     }
 
 
@@ -116,6 +116,7 @@ class BPChatAjaxHelper{
         else
             $friend_only=0;//user meta does not allow stroing false/0 values
         BPChatSettings::update_user_preference($bp->loggedin_user->id,$friend_only);
+        exit(0);
     }
 
     /* save chat message to database */
@@ -136,7 +137,7 @@ function save_messages() {
    
     echo json_encode(array("name"=>bp_get_loggedin_user_fullname(),"id"=>$new_message->id));
    
-        die();
+         exit(0);
 }
 
 
@@ -171,7 +172,7 @@ function get_updates_for_user() {
     
     echo json_encode($response);
    
-        die();
+         exit(0);
 }
 
 
