@@ -337,7 +337,7 @@
     //current mysql time
     function bpchat_get_current_mysql_time(){
         global $wpdb;
-         $time = $wpdb->get_var($wpdb->prepare("select NOW() as time"));
+         $time = $wpdb->get_var("SELECT NOW() as time");
          return $time;
     }
 

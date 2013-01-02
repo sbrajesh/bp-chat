@@ -32,7 +32,7 @@ class BPChatInstaller{
         $bp_prefix = bp_core_get_table_prefix();
     //install
     $sql_table_exists_check="SHOW TABLES LIKE '".$bp_prefix."_bp_chat_%'";
-    if($wpdb->get_col($wpdb->prepare($sql_table_exists_check)))////just update the user table
+    if($wpdb->get_col($sql_table_exists_check))////just update the user table
        $sql[]="ALTER TABLE {$bp->chat->table_chat_users} MODIFY last_active_time DATETIME ";
      else{//if tables do not exist
 

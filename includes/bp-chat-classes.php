@@ -108,7 +108,7 @@ function is_user_logged_in($user_id){
         if(empty($friend_list))
             return false;
 
-        $paged_users_sql = $wpdb->prepare("SELECT user_id FROM {$bp->chat->table_chat_users} where is_online=1 AND user_id in {$friend_list} {$pag_sql}");//// "SELECT DISTINCT um.user_id FROM " . CUSTOM_USER_META_TABLE . " um LEFT JOIN " . CUSTOM_USER_TABLE . " u ON u.ID = um.user_id WHERE um.meta_key = 'last_activity' AND u.spam = 0 AND u.deleted = 0 AND u.user_status = 0 AND DATE_ADD( FROM_UNIXTIME(um.meta_value), INTERVAL 5 MINUTE ) >= NOW() ORDER BY FROM_UNIXTIME(um.meta_value) DESC{$pag_sql}", $pag_sql);
+        $paged_users_sql = "SELECT user_id FROM {$bp->chat->table_chat_users} where is_online=1 AND user_id in {$friend_list} {$pag_sql}";//// "SELECT DISTINCT um.user_id FROM " . CUSTOM_USER_META_TABLE . " um LEFT JOIN " . CUSTOM_USER_TABLE . " u ON u.ID = um.user_id WHERE um.meta_key = 'last_activity' AND u.spam = 0 AND u.deleted = 0 AND u.user_status = 0 AND DATE_ADD( FROM_UNIXTIME(um.meta_value), INTERVAL 5 MINUTE ) >= NOW() ORDER BY FROM_UNIXTIME(um.meta_value) DESC{$pag_sql}", $pag_sql);
         return $wpdb->get_results($paged_users_sql);
         
             }   else{
@@ -143,7 +143,7 @@ function is_user_logged_in($user_id){
         if(empty($friend_list))
             return false;
 
-        $paged_users_sql = $wpdb->prepare("SELECT DISTINCT count(user_id) FROM {$bp->chat->table_chat_users} where is_online=1 AND user_id in {$friend_list} {$pag_sql}");//// "SELECT DISTINCT um.user_id FROM " . CUSTOM_USER_META_TABLE . " um LEFT JOIN " . CUSTOM_USER_TABLE . " u ON u.ID = um.user_id WHERE um.meta_key = 'last_activity' AND u.spam = 0 AND u.deleted = 0 AND u.user_status = 0 AND DATE_ADD( FROM_UNIXTIME(um.meta_value), INTERVAL 5 MINUTE ) >= NOW() ORDER BY FROM_UNIXTIME(um.meta_value) DESC{$pag_sql}", $pag_sql);
+        $paged_users_sql = "SELECT DISTINCT count(user_id) FROM {$bp->chat->table_chat_users} where is_online=1 AND user_id in {$friend_list} {$pag_sql}";//// "SELECT DISTINCT um.user_id FROM " . CUSTOM_USER_META_TABLE . " um LEFT JOIN " . CUSTOM_USER_TABLE . " u ON u.ID = um.user_id WHERE um.meta_key = 'last_activity' AND u.spam = 0 AND u.deleted = 0 AND u.user_status = 0 AND DATE_ADD( FROM_UNIXTIME(um.meta_value), INTERVAL 5 MINUTE ) >= NOW() ORDER BY FROM_UNIXTIME(um.meta_value) DESC{$pag_sql}", $pag_sql);
         return $wpdb->get_var($paged_users_sql);
 
             }   else{
@@ -565,7 +565,7 @@ var $title;//the title of the channel, may be chatting with xyz or group chat  o
       global $wpdb,$bp;
       $user_list="(".$initiator.",".$invited.")";
       $query="SELECT i.channel_id FROM {$bp->chat->table_channel_users} i,{$bp->chat->table_channel_users} o  WHERE  i.channel_id=o.channel_id AND i.user_id IN {$user_list} AND o.user_id IN {$user_list} AND i.user_id <> o.user_id AND (i.status <> 'closed' OR o.status <> 'closed')";
-      $channel_id=$wpdb->get_var($wpdb->prepare($query));
+      $channel_id=$wpdb->get_var($query);
       return $channel_id;
   }
    //set status for user channel to be open
