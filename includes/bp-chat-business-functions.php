@@ -432,7 +432,7 @@ function bpchat_get_online_users_list($echo =true) {
   
 
 function bpchat_show_user_preference(){
-    return apply_filters('bpchat_show_user_preference',false);
+    return apply_filters('bpchat_show_user_preference',true);
 }
    
 ?>

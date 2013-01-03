@@ -136,7 +136,6 @@ cursor:pointer;
 }
 .win_title_text a{
     color:#FFFFFF;
-    font-weight:bold;
     padding:0;
 }
 .win_header,.win_footer,.win_body{

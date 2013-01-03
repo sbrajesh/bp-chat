@@ -109,9 +109,9 @@ class BPChatHelper{
 
     //add_action("clear_auth_cookie","bp_chat_cleanup");//may be we can use this hook too
 
-    function bpchat_cleanup(){
-        global $current_user;
-        bpchat_logout_user($current_user->ID);
+    function cleanup(){
+        
+        bpchat_logout_user(get_current_user_id());
 
     }
     
