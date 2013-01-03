@@ -3,10 +3,10 @@
 Plugin Name: Bp Chat
 Plugin URI: http://buddydev.com/plugins/bp-chat/
 Description:  just a begining, this beta version just showcases some of the features, More features coming by end of March 2011
-Version: 1.1 beta 1
-Revision Date:March 17, 2012
+Version: 1.1 trunk
+Revision Date:Januar 2, 2013
 Requires at least: wp 3.3, BuddyPress 1.5+
-Tested up to: WP 3.3.1, BuddyPress 1.5.4
+Tested up to:WordPress 3.5+BuddyPress 1.6.2
 Author: Brajesh Singh
 Author URI: http://buddydev.com/members/sbrajesh
 */
