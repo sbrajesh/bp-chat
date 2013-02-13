@@ -145,7 +145,7 @@ function save_messages() {
 function get_updates_for_user() {
     
     global $bp, $wpdb;
-    $user_id = $bp->loggedin_user->id;
+    $user_id = get_current_user_id();
 
    // $last_fetch_time = bpchat_get_last_fetch_time($user_id); //get the last fetch time as mysql date time expression
     $last_fetch_time=$_POST["fetch_time"];

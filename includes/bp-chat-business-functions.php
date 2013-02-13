@@ -323,8 +323,8 @@
     //add oneextra field to the objects
         for ($i = 0; $i < count($msgs); $i++){
             $msgs[$i]->name = bp_core_get_user_displayname($msgs[$i]->{$uid});
-            $msgs[$i]->message =stripslashes(esc_js($msgs[$i]->message));
-            //$msgs[$i]->status=
+            $msgs[$i]->message =stripslashes($msgs[$i]->message);
+           
             $msgs[$i]->thumb = bp_core_fetch_avatar(array('item_id' => $msgs[$i]->{$uid}, 'type' => 'thumb', 'width'=>50,'height'=>50,'html'=>false));
         }
         return $msgs;
