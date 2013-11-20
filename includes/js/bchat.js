@@ -167,9 +167,11 @@ var ChatHelper={
         if(win_id){
         var chat_win=jQuery("#chat_channel_"+win_id);
         ChatWindow.maximize(chat_win);
+        
 
         //scroll the message
-         jQuery(".win_body",chat_win).scrollTo( 'max', {offset:-125, easing:'easeout'} );
+        jQuery(".win_body",chat_win).scrollTo( 'max', {offset:-125, easing:'easeOutQuad'} );
+       
         }
     }
 
@@ -242,6 +244,8 @@ has_other_win_maximized: function(){
 },
     minimize:function(win){
             jQuery(win).removeClass("open_toggler");
+             jQuery.cookie( 'maximized_chat_tab_id', null, {path: '/'} );
+            
         },
 
    toggle_window:function(win){
@@ -251,7 +255,7 @@ has_other_win_maximized: function(){
            }
       
             ChatWindow.maximize(win);
-             jQuery(".win_body",win).scrollTo( 'max', {offset:-125, easing:'easeout'} );
+             jQuery(".win_body",win).scrollTo( 'max', {offset:-125, easing:'easeOutQuad'} );
       },
 
     open:function(){},
@@ -299,7 +303,7 @@ has_other_win_maximized: function(){
            return;
             jQuery(win).removeClass("disabled");
                 jQuery(".win_content",win).append('<div><span class="user_name">'+name+'</span>: <span class="msg">'+message+'</span></div>');
-                jQuery(".win_body",win).scrollTo( 'max', {offset:-125, easing:'easeout'} );
+                jQuery(".win_body",win).scrollTo( 'max', {offset:-125, easing:'easeOutQuad'} );
                 //check for current message, do not play sound for my own message
                 if(sender_id!=bpchat.current_user_id)
                     bpchat_play_notification();
@@ -660,13 +664,13 @@ j(".chat_send_message_btn").live('click',
 		
                 return false;
 	});
-///setup polling
+///setup pollin
 if(ChatHelper.chat_offline == 0)
 		ChatHelper.set_intervals();
  });//end of document.ready
 
 
- //maximize any chat box wchich has a open status on the page
+ //maximize any chat box which has a open status on the page
  ChatHelper.restore_chat_window();
 
 });//end of jquery block
