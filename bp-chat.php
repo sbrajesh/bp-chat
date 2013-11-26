@@ -18,22 +18,20 @@ define ( 'BP_CHAT_DB_VERSION', 36 );
 if ( !defined( 'BP_CHAT_SLUG' ) )
 	define ( 'BP_CHAT_SLUG', 'chats' );
 
-define('BP_CHAT_PLUGIN_DIR',  plugin_dir_path(__FILE__));//WITH TRAILING SLASH..MIND IT
-define('BP_CHAT_PLUGIN_URL',  plugin_dir_url(__FILE__));//WITH TRAILING SLASH..MIND IT
+define( 'BP_CHAT_PLUGIN_DIR',  plugin_dir_path( __FILE__ ) );//WITH TRAILING SLASH..MIND IT
+define( 'BP_CHAT_PLUGIN_URL',  plugin_dir_url( __FILE__ ) );//WITH TRAILING SLASH..MIND IT
 
 
 
 //Initialize the Chat component
-add_action('bp_loaded','bpchat_init',1);
+add_action( 'bp_loaded', 'bpchat_init', 1 );
 function bpchat_init(){
     global $bp;
-    if(is_multisite()&&!is_main_site())
+    if( is_multisite() && ! is_main_site() )
         return;//do not load chat plugin
-    include BP_CHAT_PLUGIN_DIR.'loader.php';
-    $bp->chat=  BPChatComponent::get_instance();
+    include BP_CHAT_PLUGIN_DIR . 'loader.php';
+    $bp->chat =  BPChatComponent::get_instance();
 }
 
 
 
-
-?>

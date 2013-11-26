@@ -8,10 +8,10 @@ class BPChat_User {
     var $is_logged;
     var $status_message;
     
-    function __construct($id=null) {
-        if ($id) {
+    function __construct( $id = null ) {
+        if ( $id ) {
             $this->id = $id;
-            $this->populate($this->id);
+            $this->populate( $this->id );
         }
     }
 
@@ -41,12 +41,12 @@ class BPChat_User {
 //static methods
 
  //user has an entry in chat_user data base
-    function user_exists($user_id){
+    function user_exists( $user_id ) {
         global $bp,$wpdb;
-        $q="SELECT * FROM {$bp->chat->table_chat_users} WHERE user_id=%d";
+        $q = "SELECT * FROM {$bp->chat->table_chat_users} WHERE user_id=%d";
 
-        if($row=$wpdb->get_row($wpdb->prepare($q,$user_id)))
-                return true;
+        if( $row = $wpdb->get_row( $wpdb->prepare( $q, $user_id ) ) )
+            return true;
         else
             return false;
        
@@ -54,50 +54,52 @@ class BPChat_User {
     /*
      * set the status of user as loggedin/out
      */
-function login_logout($user_id,$status=0){
+function login_logout( $user_id, $status = 0 ){
     global $wpdb,$bp;
-    $query=$wpdb->prepare("UPDATE  {$bp->chat->table_chat_users} set is_online=%d where user_id=%d",$status,$user_id);
+    $query = $wpdb->prepare( "UPDATE  {$bp->chat->table_chat_users} set is_online=%d where user_id=%d", $status, $user_id );
  
-    return $wpdb->query($query);
+    return $wpdb->query( $query );
  
 }
 /* set the status of user as logged in*/
-   function login($user_id){
-      if(BPChat_User::is_user_logged_in($user_id))
+   function login( $user_id ){
+      
+       if( BPChat_User::is_user_logged_in( $user_id ) )
           return;//user is already logged in
        //check if user is already online
        //otherwise user may not be online or my not be existing in the
 
-       if(BPChat_User::user_exists($user_id))
-         return  BPChat_User::login_logout($user_id,1);
+       if( BPChat_User::user_exists( $user_id ) )
+         return  BPChat_User::login_logout( $user_id, 1 );
        else
-           return BPChat_User::add_user($user_id); //first time user
+           return BPChat_User::add_user( $user_id ); //first time user
       
    }
-function is_user_logged_in($user_id){
-   global $wpdb,$bp;
-    $query=$wpdb->prepare("select user_id FROM  {$bp->chat->table_chat_users} where is_online=%d AND user_id=%d",1,$user_id);
+function is_user_logged_in( $user_id ){
+    global $wpdb, $bp;
+    $query = $wpdb->prepare( "SELECT user_id FROM  {$bp->chat->table_chat_users} where is_online = %d AND user_id = %d", 1, $user_id );
 
-    return $wpdb->get_var($query);
+    return $wpdb->get_var( $query );
  
 }
-   function add_user($user_id){
-    global $wpdb,$bp;
-    $query=$wpdb->prepare("INSERT INTO {$bp->chat->table_chat_users} (user_id,is_online) values(%d, %d)",$user_id,1);
+
+function add_user( $user_id ){
+    global $wpdb, $bp;
+    $query = $wpdb->prepare( "INSERT INTO {$bp->chat->table_chat_users} (user_id, is_online) VALUES( %d, %d )",$user_id,1);
    
-    return $wpdb->query($query);
+    return $wpdb->query( $query );
    }
 
-  function logout($user_id){
+  function logout( $user_id ){
     //clear the logged in status in the stable
       //if(BPChat_User::user_exists($user_id)) //no need to check the existence
-         return BPChat_User::login_logout($user_id,0);
+         return BPChat_User::login_logout( $user_id, 0 );
      
   }
 
 //get currently online users, will return all users expect the user for whom the query is made
-  function get_online_users($page=null,$limit=null){
-       global $wpdb,$bp;
+  function get_online_users( $page = null, $limit = null ){
+       global $wpdb, $bp;
        
     if ($limit && $page)
         $pag_sql = $wpdb->prepare(" LIMIT %d, %d", intval(( $page - 1 ) * $limit), intval($limit));
@@ -105,25 +107,25 @@ function is_user_logged_in($user_id){
     $friend_list=bpchat_get_user_friend_list_as_set($bp->loggedin_user->id);
     if(bpchat_has_friends_only_enabled($bp->loggedin_user->id)){
        
-        if(empty($friend_list))
+        if( empty( $friend_list ) )
             return false;
 
-        $paged_users_sql = "SELECT user_id FROM {$bp->chat->table_chat_users} where is_online=1 AND user_id in {$friend_list} {$pag_sql}";//// "SELECT DISTINCT um.user_id FROM " . CUSTOM_USER_META_TABLE . " um LEFT JOIN " . CUSTOM_USER_TABLE . " u ON u.ID = um.user_id WHERE um.meta_key = 'last_activity' AND u.spam = 0 AND u.deleted = 0 AND u.user_status = 0 AND DATE_ADD( FROM_UNIXTIME(um.meta_value), INTERVAL 5 MINUTE ) >= NOW() ORDER BY FROM_UNIXTIME(um.meta_value) DESC{$pag_sql}", $pag_sql);
-        return $wpdb->get_results($paged_users_sql);
+        $paged_users_sql = "SELECT user_id FROM {$bp->chat->table_chat_users} WHERE is_online=1 AND user_id IN {$friend_list} {$pag_sql}";//// "SELECT DISTINCT um.user_id FROM " . CUSTOM_USER_META_TABLE . " um LEFT JOIN " . CUSTOM_USER_TABLE . " u ON u.ID = um.user_id WHERE um.meta_key = 'last_activity' AND u.spam = 0 AND u.deleted = 0 AND u.user_status = 0 AND DATE_ADD( FROM_UNIXTIME(um.meta_value), INTERVAL 5 MINUTE ) >= NOW() ORDER BY FROM_UNIXTIME(um.meta_value) DESC{$pag_sql}", $pag_sql);
+        return $wpdb->get_results( $paged_users_sql );
         
-            }   else{
+     }else{
 
-      //incase of sitewide pref show users with sitewide pref or in the friend_list
+          //incase of sitewide pref show users with sitewide pref or in the friend_list
 
-      $sql="SELECT user_id FROM {$bp->chat->table_chat_users} where is_online=1 AND user_id!=%d AND friends_only=0 ";//{$pag_sql}
+          $sql = "SELECT user_id FROM {$bp->chat->table_chat_users} WHERE is_online=1 AND user_id!=%d AND friends_only=0 ";//{$pag_sql}
 
-      if($friend_list){
-            $sql2="SELECT user_id FROM {$bp->chat->table_chat_users} where is_online=1 AND user_id in {$friend_list}";
-            $sql=$sql." UNION ".$sql2 ;
-      }
-     
-      $paged_users_sql = $wpdb->prepare($sql,$bp->loggedin_user->id);//"SELECT user_id FROM {$bp->chat->table_chat_users} where is_online=1 AND user_id!=%d AND friends_only=0 {$pag_sql}",$bp->loggedin_user->id);//// "SELECT DISTINCT um.user_id FROM " . CUSTOM_USER_META_TABLE . " um LEFT JOIN " . CUSTOM_USER_TABLE . " u ON u.ID = um.user_id WHERE um.meta_key = 'last_activity' AND u.spam = 0 AND u.deleted = 0 AND u.user_status = 0 AND DATE_ADD( FROM_UNIXTIME(um.meta_value), INTERVAL 5 MINUTE ) >= NOW() ORDER BY FROM_UNIXTIME(um.meta_value) DESC{$pag_sql}", $pag_sql);
-      $paged_users = $wpdb->get_results($paged_users_sql);
+          if( $friend_list ) {
+                $sql2 = "SELECT user_id FROM {$bp->chat->table_chat_users} WHERE is_online=1 AND user_id IN {$friend_list}";
+                $sql = $sql . " UNION " . $sql2 ;
+          }
+
+          $paged_users_sql = $wpdb->prepare( $sql, $bp->loggedin_user->id );//"SELECT user_id FROM {$bp->chat->table_chat_users} where is_online=1 AND user_id!=%d AND friends_only=0 {$pag_sql}",$bp->loggedin_user->id);//// "SELECT DISTINCT um.user_id FROM " . CUSTOM_USER_META_TABLE . " um LEFT JOIN " . CUSTOM_USER_TABLE . " u ON u.ID = um.user_id WHERE um.meta_key = 'last_activity' AND u.spam = 0 AND u.deleted = 0 AND u.user_status = 0 AND DATE_ADD( FROM_UNIXTIME(um.meta_value), INTERVAL 5 MINUTE ) >= NOW() ORDER BY FROM_UNIXTIME(um.meta_value) DESC{$pag_sql}", $pag_sql);
+          $paged_users = $wpdb->get_results( $paged_users_sql );
 
     return  $paged_users;//, 'total' => $total_users);
 
@@ -135,27 +137,29 @@ function is_user_logged_in($user_id){
   function get_online_users_count(){
       global $wpdb,$bp;
 
-      $total_users_sql = "SELECT DISTINCT count(user_id) FROM {$bp->chat->table_chat_users} where is_online=1 and user_id!=%d";
+      $total_users_sql = "SELECT DISTINCT COUNT(user_id) FROM {$bp->chat->table_chat_users} WHERE is_online=1 and user_id!=%d";
 
-      $friend_list=bpchat_get_user_friend_list_as_set($bp->loggedin_user->id);
-    if(bpchat_has_friends_only_enabled($bp->loggedin_user->id)){
+      
+      $friend_list = bpchat_get_user_friend_list_as_set( $bp->loggedin_user->id );
+      
+      if( bpchat_has_friends_only_enabled( $bp->loggedin_user->id ) ) {
 
-        if(empty($friend_list))
-            return false;
+            if( empty( $friend_list ) )
+                return false;
 
-        $paged_users_sql = "SELECT DISTINCT count(user_id) FROM {$bp->chat->table_chat_users} where is_online=1 AND user_id in {$friend_list} {$pag_sql}";//// "SELECT DISTINCT um.user_id FROM " . CUSTOM_USER_META_TABLE . " um LEFT JOIN " . CUSTOM_USER_TABLE . " u ON u.ID = um.user_id WHERE um.meta_key = 'last_activity' AND u.spam = 0 AND u.deleted = 0 AND u.user_status = 0 AND DATE_ADD( FROM_UNIXTIME(um.meta_value), INTERVAL 5 MINUTE ) >= NOW() ORDER BY FROM_UNIXTIME(um.meta_value) DESC{$pag_sql}", $pag_sql);
-        return $wpdb->get_var($paged_users_sql);
+            $paged_users_sql = "SELECT DISTINCT COUNT(user_id) FROM {$bp->chat->table_chat_users} WHERE is_online=1 AND user_id in {$friend_list} {$pag_sql}";//// "SELECT DISTINCT um.user_id FROM " . CUSTOM_USER_META_TABLE . " um LEFT JOIN " . CUSTOM_USER_TABLE . " u ON u.ID = um.user_id WHERE um.meta_key = 'last_activity' AND u.spam = 0 AND u.deleted = 0 AND u.user_status = 0 AND DATE_ADD( FROM_UNIXTIME(um.meta_value), INTERVAL 5 MINUTE ) >= NOW() ORDER BY FROM_UNIXTIME(um.meta_value) DESC{$pag_sql}", $pag_sql);
+            return $wpdb->get_var( $paged_users_sql );
 
-            }   else{
+      }else {
 
-      //incase of sitewide pref show users with sitewide pref or in the friend_list
+          //incase of sitewide pref show users with sitewide pref or in the friend_list
 
-      $sql="SELECT user_id FROM {$bp->chat->table_chat_users} where is_online=1 AND user_id!=%d AND friends_only=0 ";//{$pag_sql}
+          $sql = "SELECT user_id FROM {$bp->chat->table_chat_users} WHERE is_online=1 AND user_id!=%d AND friends_only=0 ";//{$pag_sql}
 
-      if($friend_list){
+          if($friend_list){
             $sql2="SELECT user_id FROM {$bp->chat->table_chat_users} where is_online=1 AND user_id in {$friend_list}";
             $sql=$sql." UNION ".$sql2 ;
-      }
+          }
      
       $paged_users_sql = $wpdb->prepare($sql,$bp->loggedin_user->id);//"SELECT user_id FROM {$bp->chat->table_chat_users} where is_online=1 AND user_id!=%d AND friends_only=0 {$pag_sql}",$bp->loggedin_user->id);//// "SELECT DISTINCT um.user_id FROM " . CUSTOM_USER_META_TABLE . " um LEFT JOIN " . CUSTOM_USER_TABLE . " u ON u.ID = um.user_id WHERE um.meta_key = 'last_activity' AND u.spam = 0 AND u.deleted = 0 AND u.user_status = 0 AND DATE_ADD( FROM_UNIXTIME(um.meta_value), INTERVAL 5 MINUTE ) >= NOW() ORDER BY FROM_UNIXTIME(um.meta_value) DESC{$pag_sql}", $pag_sql);
      return count($wpdb->get_results($paged_users_sql,ARRAY_A));
