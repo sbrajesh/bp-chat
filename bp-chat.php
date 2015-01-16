@@ -22,6 +22,102 @@ define( 'BP_CHAT_PLUGIN_DIR',  plugin_dir_path( __FILE__ ) );//WITH TRAILING SLA
 define( 'BP_CHAT_PLUGIN_URL',  plugin_dir_url( __FILE__ ) );//WITH TRAILING SLASH..MIND IT
 
 
+class BP_Chat_Helper {
+	
+	private static $instance;
+	
+	private $url;
+	private $path;
+	
+	public $table_name_users;
+	public $table_name_channels;
+	public $table_name_messages;
+	public $table_name_channel_users;
+	
+	private function __construct() {
+		
+		
+		add_action( 'bp_loaded', array( $this, 'setup' ), 5 );
+		add_action( 'bp_loaded', array( $this, 'load' ) );
+		
+	}
+
+	/**
+	 * 
+	 * @return type
+	 */
+	public static function get_instance(){
+		
+		if( ! isset( self:: $instance ) )
+			self::$instance = new self();
+		
+		return self::$instance;
+		
+	}
+	
+	public function setup() {
+		
+		$this->path = plugin_dir_path( __FILE__ );
+		
+		$this->url = plugin_dir_url( __FILE__ );
+		
+		//setup tables
+		$this->setup_table_names();
+		
+		
+	}
+	
+	
+	private function setup_table_names() {
+		
+			$this->table_name_users				= $table_prefix . 'bp_chat_users';
+			$this->table_name_channels			= $table_prefix . 'bp_chat_channels';
+			$this->table_name_channel_users		= $table_prefix . 'bp_chat_channel_users'; 
+			$this->table_name_messages			= $table_prefix . 'bp_chat_messages';  
+	}
+	/**
+	 * Load required files
+	 * 
+	 */
+	public function load() {
+		
+	}
+	
+	/**
+	 * URL to the bp-chat plugin directory with trailing slash
+	 * 
+	 * @return string url
+	 */
+	public function get_url() {
+		
+		return $this->ur;
+	}
+	/**
+	 * File system absolute path to the bp chat plugin directory with trailing slash
+	 * @return string
+	 */
+	public function get_path() {
+		
+		return $this->path;
+	}
+}
+
+/**
+ * 
+ */
+/**
+ * Singleton instance
+ * 
+ * @return BP_Chat_Helper
+ */
+function bp_chat() {
+	
+	return BP_Chat_Helper::get_instance();
+	
+}
+
+bp_chat();
+
 
 //Initialize the Chat component
 add_action( 'bp_loaded', 'bpchat_init', 1 );
