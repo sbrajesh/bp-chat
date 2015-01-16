@@ -152,8 +152,10 @@ function get_updates_for_user() {
 //$time=gmdate("Y-m-d H:i:s",  time());
   
 
+	$bpchat = bp_chat();
+	
    // $query = "SELECT msg.id,msg.channel_id, msg.message, msg.sender_id,msg.message,msg.sent_at FROM {$bp->chat->table_chat_messages} msg, WHERE msg.channel_id IN( SELECT channel_id FROM {$bp->chat->table_channel_users} where user_id=%d and status <> 'closed') and msg.sent_at >= '".$last_fetch_time."'  ORDER BY msg.sent_at ASC ";
- $query = "SELECT msg.id,msg.channel_id, msg.message, msg.sender_id,msg.message,msg.sent_at FROM {$bp->chat->table_chat_messages} msg WHERE msg.channel_id IN( SELECT channel_id FROM {$bp->chat->table_channel_users} where user_id=%d and status <> 'closed') and msg.sent_at >= '".$last_fetch_time."' ORDER BY msg.sent_at ASC ";
+ $query = "SELECT msg.id,msg.channel_id, msg.message, msg.sender_id,msg.message,msg.sent_at FROM {$bpchat->table_name_messages} msg WHERE msg.channel_id IN( SELECT channel_id FROM {$bpchat->table_name_channel_users} where user_id=%d and status <> 'closed') and msg.sent_at >= '".$last_fetch_time."' ORDER BY msg.sent_at ASC ";
 
 
     $q = $wpdb->prepare($query, $user_id);
@@ -162,7 +164,7 @@ function get_updates_for_user() {
      $time=bpchat_get_current_mysql_time();
     $messages = bpchat_extend_messages($messages);
 
-    $query_status = "SELECT c.channel_id,c.status, c.user_id,u.is_online,IF (DATE_ADD( u.last_active_time, INTERVAL 30 SECOND ) >= NOW(), 'active','idle') as user_status  FROM {$bp->chat->table_channel_users} c,{$bp->chat->table_chat_users} u WHERE c.channel_id IN( SELECT channel_id FROM {$bp->chat->table_channel_users} where user_id=%d and status <> 'closed') AND c.user_id!=%d and u.user_id=c.user_id ORDER BY channel_id DESC ";
+    $query_status = "SELECT c.channel_id,c.status, c.user_id,u.is_online,IF (DATE_ADD( u.last_active_time, INTERVAL 30 SECOND ) >= NOW(), 'active','idle') as user_status  FROM {$bpchat->table_name_channel_users} c,{$bpchat->table_name_users} u WHERE c.channel_id IN( SELECT channel_id FROM {$bpchat->table_name_channel_users} where user_id=%d and status <> 'closed') AND c.user_id!=%d and u.user_id=c.user_id ORDER BY channel_id DESC ";
     
     $status=$wpdb->get_results($wpdb->prepare($query_status,$user_id,$user_id));
     //update last fetch time for user
@@ -180,4 +182,3 @@ function get_updates_for_user() {
 
 BPChatAjaxHelper::get_instance();
 
-?>

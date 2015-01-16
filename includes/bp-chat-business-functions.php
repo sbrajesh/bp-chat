@@ -279,9 +279,11 @@
 
     function bpchat_get_other_party_ids($channel_id) {
        // return $chat->
-      global $wpdb,$bp;
+      global $wpdb ;
+	  $bpchat = bp_chat();
       $user_id=$bp->loggedin_user->id;
-      $query="SELECT o.user_id FROM {$bp->chat->table_channel_users} i, {$bp->chat->table_channel_users} o where o.channel_id=i.channel_id AND i.user_id=%d";
+	  
+      $query="SELECT o.user_id FROM {$bpchat->table_name_channel_users} i, {$bpchat->table_name_channel_users} o where o.channel_id=i.channel_id AND i.user_id=%d";
 
       $ids=$wpdb->get_results($wpdb->prepare($query,$user_id));
       return $ids;
