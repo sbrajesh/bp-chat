@@ -70,17 +70,44 @@ class BP_Chat_Helper {
 	
 	private function setup_table_names() {
 		
-			$this->table_name_users				= $table_prefix . 'bp_chat_users';
-			$this->table_name_channels			= $table_prefix . 'bp_chat_channels';
-			$this->table_name_channel_users		= $table_prefix . 'bp_chat_channel_users'; 
-			$this->table_name_messages			= $table_prefix . 'bp_chat_messages';  
+		$table_prefix = bp_core_get_table_prefix();
+		
+		$this->table_name_users				= $table_prefix . 'bp_chat_users';
+		$this->table_name_channels			= $table_prefix . 'bp_chat_channels';
+		$this->table_name_channel_users		= $table_prefix . 'bp_chat_channel_users'; 
+		$this->table_name_messages			= $table_prefix . 'bp_chat_messages';  
 	}
 	/**
 	 * Load required files
 	 * 
 	 */
 	public function load() {
+		//if we are on a multisite environment and this is not the main site
+		//do not load this plugin
+		if( is_multisite() && ! is_main_site() )
+			return;//do not load chat plugin
 		
+		
+		$path = $this->get_path();
+		
+		$files = array(
+			'loader.php',
+			'includes/bp-chat-classes.php',
+			'includes/bp-chat-ajax.php',
+			'includes/chat-bar.php',
+			'includes/bp-chat-business-functions.php',
+			'includes/bp-chat-admin.php' 
+		);
+		
+		
+		if( is_admin() ) {
+			
+		}
+		
+		foreach( $files as $file )
+			require_once $path . $file ;
+		
+		do_action( 'bpchat_loaded' );
 	}
 	
 	/**
@@ -103,9 +130,6 @@ class BP_Chat_Helper {
 }
 
 /**
- * 
- */
-/**
  * Singleton instance
  * 
  * @return BP_Chat_Helper
@@ -117,17 +141,4 @@ function bp_chat() {
 }
 
 bp_chat();
-
-
-//Initialize the Chat component
-add_action( 'bp_loaded', 'bpchat_init', 1 );
-function bpchat_init(){
-    global $bp;
-    if( is_multisite() && ! is_main_site() )
-        return;//do not load chat plugin
-    include BP_CHAT_PLUGIN_DIR . 'loader.php';
-    $bp->chat =  BPChatComponent::get_instance();
-}
-
-
 

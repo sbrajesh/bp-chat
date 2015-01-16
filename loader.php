@@ -15,15 +15,8 @@ class BPChatComponent extends BP_Component{
     /**
      * include files
      */
-    function includes(){
-        $includes = array( 
-                'includes/bp-chat-classes.php',
-                'includes/bp-chat-ajax.php',
-                'includes/chat-bar.php',
-                'includes/bp-chat-business-functions.php',
-                'includes/bp-chat-admin.php' 
-             );
-        parent::includes( $includes );
+    function includes() {
+      
 
     }
     
@@ -256,3 +249,10 @@ class BPChatCronHelper{
 BPChatCronHelper::get_instance();
 
 
+add_action( 'bp_setup_components', 'bpchat_setup_component', 6 );
+
+function bpchat_setup_component(){
+	
+	$bp = buddypress();
+	$bp->chat = BPChatComponent::get_instance();
+}
