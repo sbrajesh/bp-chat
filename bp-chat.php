@@ -83,6 +83,7 @@ class BP_Chat_Helper {
 		$path = $this->get_path();
 		
 		$files = array(
+			'assets/asset-loader.php',
 			'core/cron.php',
 			'core/helper.php',
 			'includes/bp-chat-classes.php',
