@@ -59,11 +59,13 @@ class BPChatHelper{
             wp_enqueue_script( "json2" );
             wp_enqueue_script( "jquery" );
             
-            $url = BP_CHAT_PLUGIN_URL . "includes/js/bchat.js";
-            wp_enqueue_script( "poshytip", BP_CHAT_PLUGIN_URL . "includes/js/tip/jquery.poshytip.js", array( "jquery" ) );
+			$base_url = bp_chat()->get_url();
+            
+			$url =  $base_url . 'includes/js/bchat.js';
+            wp_enqueue_script( "poshytip", $base_url . 'includes/js/tip/jquery.poshytip.js', array( "jquery" ) );
             
             if(BPChatSettings::is_sound_enabled())
-                wp_enqueue_script( "soundmanager", BP_CHAT_PLUGIN_URL. "assets/soundmanager/script/soundmanager2.js" );
+                wp_enqueue_script( "soundmanager", $base_url. 'assets/soundmanager/script/soundmanager2.js' );
 
             wp_enqueue_script( "chatjs", $url, array( "jquery", "json2" ) );
     }
@@ -77,7 +79,7 @@ class BPChatHelper{
             return;
          
         if( is_user_logged_in() ) {
-            $url = BP_CHAT_PLUGIN_URL . "/includes/css/chat.css";
+            $url =  bp_chat()->get_url() . "/includes/css/chat.css";
             wp_enqueue_style( "chatcss", $url );
         }
     }

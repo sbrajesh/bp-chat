@@ -11,16 +11,8 @@ Author: Brajesh Singh
 Author URI: http://buddydev.com/members/sbrajesh
 */
 
-define ( 'BP_CHAT_IS_INSTALLED', 1 );
-define ( 'BP_CHAT_VERSION', '1.0' );
+
 define ( 'BP_CHAT_DB_VERSION', 36 );
-
-if ( !defined( 'BP_CHAT_SLUG' ) )
-	define ( 'BP_CHAT_SLUG', 'chats' );
-
-define( 'BP_CHAT_PLUGIN_DIR',  plugin_dir_path( __FILE__ ) );//WITH TRAILING SLASH..MIND IT
-define( 'BP_CHAT_PLUGIN_URL',  plugin_dir_url( __FILE__ ) );//WITH TRAILING SLASH..MIND IT
-
 
 class BP_Chat_Helper {
 	
