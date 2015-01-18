@@ -115,7 +115,7 @@ class BPChatAjaxHelper{
             $friend_only=1;
         else
             $friend_only=0;//user meta does not allow stroing false/0 values
-        BPChatSettings::update_user_preference($bp->loggedin_user->id,$friend_only);
+        bpchat_update_user_preference($bp->loggedin_user->id,$friend_only);
         exit(0);
     }
 

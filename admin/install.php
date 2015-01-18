@@ -119,24 +119,3 @@ class BP_Chat_Installer {
 }//end of class
 
 BP_Chat_Installer::get_instance();
-
-
-class BPChatSettings {
-     
-     
-     
-	public function get_volume() {
-         //for now, please use the below filter for volume control
-            return apply_filters( 'bpchat_get_notification_volume', 20 );
-       }
-	   
-    public function is_sound_enabled() {
-          //later customize it for each user, currently make it default
-          return apply_filters( 'bpchat_has_sound_notification_enabled', 1 );//return 0 to disable it
-      }
-      
-    public function update_user_preference( $user_id, $prefs ) {
-		  
-             BPChat_User::set_pref( $user_id,$prefs );
-    }
-}
