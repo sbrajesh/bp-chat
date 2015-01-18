@@ -399,10 +399,6 @@
           BPChat_User::update_last_active($user_id);
       }
 
-     
-      function bpchat_is_disabled(){
-          return apply_filters("bpchat_is_disabled",false);
-      }
 
 
 function bpchat_get_online_users_list($echo =true) {
@@ -431,10 +427,3 @@ function bpchat_get_online_users_list($echo =true) {
 
   
 }
-  
-
-function bpchat_show_user_preference(){
-    return apply_filters('bpchat_show_user_preference',true);
-}
-   
-?>

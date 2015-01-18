@@ -84,6 +84,7 @@ class BP_Chat_Helper {
 		
 		$files = array(
 			'assets/asset-loader.php',
+			'core/functions.php',
 			'core/actions.php',
 			'core/ajax.php',
 			'core/hooks.php',

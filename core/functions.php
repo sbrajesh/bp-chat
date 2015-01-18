@@ -11,7 +11,8 @@ function bpchat_get_all_options() {
 		'notification_volume'			=> 20,
 		'notification_enabled'			=> true,
 		'notification_sound_enabled'	=> true,
-		
+		'allow_prefernce_change'		=> true, 
+		'is_disabled'					=> false,
 		
 	);
 
@@ -76,7 +77,7 @@ function bpchat_update_option( $option_name, $value ) {
  */
 function bpchat_is_notification_sound_enabled( $user_id ) {
 	
-	return apply_filters( 'bpchat_is_notification_sound_enabled', bpchat_get_options( 'notification_sound_enabled' ), $user_id );
+	return apply_filters( 'bpchat_is_notification_sound_enabled', bpchat_get_option( 'notification_sound_enabled' ), $user_id );
 	
 }
 /**
@@ -87,7 +88,7 @@ function bpchat_is_notification_sound_enabled( $user_id ) {
  */
 function bpchat_get_notification_volume( $user_id ) {
 	
-	return apply_filters( 'bpchat_get_notification_volume', bpchat_get_options( 'notification_volume' ), $user_id );
+	return apply_filters( 'bpchat_get_notification_volume', bpchat_get_option( 'notification_volume' ), $user_id );
 	
 }
 /**
@@ -98,4 +99,18 @@ function bpchat_get_notification_volume( $user_id ) {
 function bpchat_update_user_preference( $user_id, $prefs ) {
 	
 	BPChat_User::set_pref( $user_id,$prefs );
+}
+/**
+ * Show users the options for changing preference?
+ * 
+ * @return boolean
+ */
+function bpchat_show_user_preference() {
+	
+    return apply_filters( 'bpchat_show_user_preference', bpchat_get_option( 'allow_prefernce_change' ) );
+}
+
+function bpchat_is_disabled() {
+	
+	return apply_filters( 'bpchat_is_disabled' ,  bpchat_get_option( 'is_disabled' ) );
 }

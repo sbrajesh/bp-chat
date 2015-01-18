@@ -3,7 +3,7 @@
  * Installations/admin functions
  */
 /**
- * Bp Chat Installer class
+ * BP Chat Installer class
  */
 class BP_Chat_Installer {
 	
