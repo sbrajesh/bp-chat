@@ -111,7 +111,7 @@ class BP_Chat_Helper {
 	 */
 	public function get_url() {
 		
-		return $this->ur;
+		return $this->url;
 	}
 	/**
 	 * File system absolute path to the bp chat plugin directory with trailing slash
