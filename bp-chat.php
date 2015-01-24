@@ -90,6 +90,7 @@ class BP_Chat_Helper {
 			'core/hooks.php',
 			'core/template.php',
 			'core/cron.php',
+			'core/users/functions.php',
 			'includes/bp-chat-classes.php',
 			'includes/bp-chat-ajax.php',
 			'includes/chat-bar.php',

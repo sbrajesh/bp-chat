@@ -195,73 +195,15 @@
  * 
  * 
  */
-    function bpchat_get_user($user_id){
 
-    }
 
-    /* logout a user from chat session*/
-    function bpchat_logout_user($user_id){
-        //clear the is_logged in {$bp->chat->table_users
-        return BPChat_User::logout($user_id);
-    }
 
-    /* login a user for chat*/
-    function bpchat_login_user($user_id){
-     //update an entry in bp_chat_users table and set the flag is_logged to 1
-        return BPChat_User::login($user_id);
 
-    }
-/**
- * Is the user logged in
- * @param <type> $user_id
- * @return <type>
- */
-    function bpchat_is_user_logged_in($user_id){
-    //is user logged in or not
-        $user=bpchat_get_user($user_id);
-        return $user->is_logged;
-    }
-
-    function bpchat_get_user_status($user_id){
-        $user=bpchat_get_user($user_id);
-        return $user->status;
-    }
-
-    function bpchat_is_user_idle($user_id){
-
-    }
-
-    
-    function bpchat_update_user_status($user_id,$status){
-
-        }
-    
-    function bpchat_update_fetch_time($user_id){
-        return BPChat_User::update_fetch_time($user_id);
-        
-        }
-
-    function bpchat_get_last_fetch_time($user_id){
-        return BPChat_User::get_fetch_time($user_id);
-    }
     function bpchat_get_channels_for_user($user_id){
         $channels=BPChat_Channel::get_open_channel_for_user($user_id);
         return $channels;
     }
 
-    function bpchat_get_messages_for_user($user_id){
-
-    }
-
-    function bpchat_get_offline_messages($user_id){
-
-    }
-    function bpchat_get_user_status_message($user_id){
-
-    }
-    function bpchat_set_user_status_message(){
-
-    }
 
 /***
  * 
@@ -270,11 +212,6 @@
  * 
  * 
  */
-
-    function bpchat_get_message($msg_id){
-        //may not use this
-    }
-
 
 
     function bpchat_get_other_party_ids($channel_id) {
@@ -292,16 +229,6 @@
 
     /* User manipulations */
 
-    function bpchat_get_online_users($limit = null, $page = 1) {
-
-        $users=BPChat_User::get_online_users();
-        return $users;
-
-    }
-
-    function bpchat_get_online_users_count(){
-        return BPChat_User::get_online_users_count();
-    }
     /* get the users in current  room */
     //get active users in current room
     //get friends
@@ -358,11 +285,7 @@
     return false;
     }
 
-    function bpchat_has_friends_only_enabled($user_id){
-       return apply_filters('bpchat_has_friend_only_enabled',BPChat_User::get_pref($user_id));//if 1:friends only, 0: sitewide
-    }
 
-  
 
     /*online user or iofline fix*/
     //get the current user online from their bp activity
@@ -391,39 +314,6 @@
 
                     return $paged_users;
             }
-       /**
-        * Set a User as Active
-        * @param type $user_id 
-        */     
-      function   bpchat_update_last_active($user_id){
-          BPChat_User::update_last_active($user_id);
-      }
 
 
 
-function bpchat_get_online_users_list($echo =true) {
-
-    global $wpdb, $bp;
-   
-    $users = bpchat_get_online_users(null, 0); //$users;
-    $total = bpchat_get_online_users_count();//total online users
-    //something to sniff only those who are allowed to chat
-    $my_id = $bp->loggedin_user->id;
-
-    $html = "";
-    if(!empty($users))
-    foreach ($users as $u) {
-        $html.="<div class='friend_list_item'>";
-        $html.='<a class="online_friend" id="chat_with_' . $u->user_id . '">';
-        $html.=bp_core_fetch_avatar(array('item_id' => $u->user_id, 'type' => 'thumb', 'width' => 32, 'height' => 32, 'class' => 'friend-avatar'));
-        $html.="<span class='disabled friend_list_item_orig_avatar_src'>" . bp_core_fetch_avatar(array('item_id' => $u->user_id, 'type' => 'thumb', 'width' => 50, 'height' => 50, 'html' => false)) . "</span>";
-        $html.='<span class="friend_list_item_name">' . bp_core_get_user_displayname($u->user_id) . '</span>';
-        $html.="<span class='clear'></span>";
-        $html.="</a><div class='clear'></div></div>";
-    }
-
-    echo $html;
-
-
-  
-}

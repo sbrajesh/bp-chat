@@ -12,6 +12,7 @@ function bpchat_get_all_options() {
 		'notification_enabled'			=> true,
 		'notification_sound_enabled'	=> true,
 		'allow_prefernce_change'		=> true, 
+		'default_chat_preference'		=> 'all',//who should be listed in the buddy list
 		'is_disabled'					=> false,
 		
 	);
@@ -91,24 +92,7 @@ function bpchat_get_notification_volume( $user_id ) {
 	return apply_filters( 'bpchat_get_notification_volume', bpchat_get_option( 'notification_volume' ), $user_id );
 	
 }
-/**
- * Update User chat preference (sitewide|friends only )
- * @param type $user_id
- * @param type $prefs
- */
-function bpchat_update_user_preference( $user_id, $prefs ) {
-	
-	BPChat_User::set_pref( $user_id,$prefs );
-}
-/**
- * Show users the options for changing preference?
- * 
- * @return boolean
- */
-function bpchat_show_user_preference() {
-	
-    return apply_filters( 'bpchat_show_user_preference', bpchat_get_option( 'allow_prefernce_change' ) );
-}
+
 
 function bpchat_is_disabled() {
 	
