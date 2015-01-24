@@ -187,12 +187,12 @@ function bpchat_login_user( $user_id ) {
 	return bpchat_update_user_state( $user_id, 'online' );//may be we should remember the last state?
 }
 
-
-function bpchat_get_online_users( $limit = null, $page = 1 ) {
+function bpchat_get_online_user_query_args( $limit = null, $page = 1 ) {
 
 	$user_query_args = array(
 			'page'				=> $page,
 			'per_page'			=> $limit,
+			'count_total'		=> false,
 			);
 
 	
@@ -220,31 +220,42 @@ function bpchat_get_online_users( $limit = null, $page = 1 ) {
 		// Only return matches of friends of this user.
 		
 	if ( $chat_buddy_prefernce == 'friends' && $user_id ) {
-			$user_query_args['include'] = friends_get_friend_user_ids( $user_id );
+		//we need to work on it as wp will include all frinds which is not what we want
+		$user_query_args['include'] = friends_get_friend_user_ids( $user_id );
 	}
 
-		$user_query_args = apply_filters( 'bp_chat_online_users_query_args', $user_query_args );
 		
-		if ( is_wp_error( $user_query_args ) ) {
-			return $user_query_args;
-		}
+	$user_query_args = apply_filters( 'bp_chat_online_users_query_args', $user_query_args );
 		
-	$user_query = new WP_User_Query( $user_query_args );//BP_User_Query will not work because of it's use of user_ids clause
+		
+	return $user_query_args;	
+}
+function bpchat_get_online_users(  ) {
+
+	$user_query = new WP_User_Query( bpchat_get_online_user_query_args() );//BP_User_Query will not work because of it's use of user_ids clause
 	
 	return $user_query->get_results();
 
 }
 
-function bpchat_get_online_users_count(){
-	return BPChat_User::get_online_users_count();
+function bpchat_get_online_users_count() {
+	
+	if( !is_user_logged_in() )
+		return 0;
+	
+	$args = bpchat_get_online_user_query_args();
+	$args['count_total'] = true;
+	$args['fields'] = 'ID';//
+	$user_query = new WP_User_Query( $args );
+	
+	return $user_query->get_total();
 }
 
-function bpchat_get_online_users_list( $echo = true) {
+function bpchat_get_online_users_list( $echo = true ) {
 
     $users = bpchat_get_online_users( null, 0 ); //$users;
-    $total = 10;//bpchat_get_online_users_count();//total online users
-    //something to sniff only those who are allowed to chat
-    $my_id = get_current_user_id();
+   
+    
 
     $html = '';
 	
