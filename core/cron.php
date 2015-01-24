@@ -48,7 +48,7 @@ class BPChatCronHelper{
         //get current online users from the bp
         //what if my browser is open and I am set logged out because I was ainactive, no worries, it should display you were inactive, click togo active
        //update bpchat_users set is_online=0 if the user is not in bp online list or is not active for last couple of minutes
-        BPChat_User::cleanup();
+       bpchat_mark_users_idle();
 
     }
 

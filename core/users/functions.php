@@ -11,6 +11,7 @@ function bpchat_get_all_user_states() {
 		'away'		=> __( 'Away', 'bp-chat' ),
 		'offline'	=> __( 'Offline', 'bp-chat' ),
 		'busy'		=> __( 'Busy', 'bp-chat' ),
+		'idle'		=> __('Idle', 'bp-chat' ),
 	);
 	
 	return apply_filters( 'bpchat_user_states', $states );
@@ -275,4 +276,21 @@ function bpchat_get_online_users_list( $echo = true ) {
 
 
   
+}
+
+
+function bpchat_mark_users_idle() {
+
+	      //any user who did not fetch the message for last time, means he has closed the browser or has a network disconnection or has logged out, sio let us clean the table
+      global $wpdb;
+	  
+	
+	//for all users who have been inactive for last 2 minutes, set them away
+	  
+	  $checked_time = current_time('timestamp') - 120;//two minutes ago
+	  
+	  $query = $wpdb->prepare( "UPDATE {$wpdb->usermeta} SET bpchat_state=%s WHERE user_id IN ( SELECT user_id FROM {$wpdb->usermeta}  WHERE meta_key = %s AND meta_value < %d ) ", 'idle', 'bpchat_last_active_time', $checked_time );
+      
+	  $wpdb->query( $query );
+      
 }
