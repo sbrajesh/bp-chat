@@ -136,7 +136,7 @@ function bp_chat_show_chat_bar() {
                              <div class="win_footer">
                              </div>
                        </div><!-- end of chat window -->
-                       <input type="hidden" id="fetch_time" value="<?php echo bpchat_get_current_mysql_time();?>" />
+                       <input type="hidden" id="fetch_time" value="<?php echo current_time('timestamp');?>" />
                        <input type="hidden" id="mesage_store" value="" />
                                     
                    </div> <!-- end of chat tab-->

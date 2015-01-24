@@ -177,28 +177,6 @@
 //get messages after time
 
 
-
-/*users related*/
-//get user status
-//update user
-//login
-//logout
-//get_conncted channels
-//get connected peers
-//
-/**
- * 
- * 
- * 
- * User Management functions
- * 
- * 
- * 
- */
-
-
-
-
     function bpchat_get_channels_for_user($user_id){
         $channels=BPChat_Channel::get_open_channel_for_user($user_id);
         return $channels;
@@ -258,62 +236,4 @@
         }
         return $msgs;
     }
-
-
-
-    ////login/logout functions
-    //set the entry in user table
-    //current mysql time
-    function bpchat_get_current_mysql_time(){
-        global $wpdb;
-         $time = $wpdb->get_var("SELECT NOW() as time");
-         return $time;
-    }
-
-
-    //get the friend list as a set to be used in query
-
-    function bpchat_get_user_friend_list_as_set($user_id){
-        global $bp;
-    $friends=friends_get_friend_user_ids($user_id);
-    if(!empty($friends)){
-        $friend_list=join(",", $friends);
-        $friend_list="( ".$friend_list." )";
-        return  $friend_list;
-
-    }
-    return false;
-    }
-
-
-
-    /*online user or iofline fix*/
-    //get the current user online from their bp activity
-    function bpchat_get_users_online_by_time() {
-                    global $wpdb, $bp;
-    $type='online';
-    $limit=0;
-                    $sql = array();
-
-    //taken from bp-core-classes.js bp_core_get_users;
-                    $sql['select_main'] = "SELECT DISTINCT u.ID as id";
-                    $sql['select_active'] = ", um.meta_value as last_activity";
-                    $sql['from'] = "FROM " . CUSTOM_USER_TABLE . " u LEFT JOIN " . CUSTOM_USER_META_TABLE . " um ON um.user_id = u.ID";
-                    $sql['where'] = 'WHERE ' . bp_core_get_status_sql( 'u.' );
-                    $sql['where_active'] = "AND um.meta_key = 'last_activity'";
-                    $sql['where_online'] = "AND DATE_ADD( um.meta_value, INTERVAL 5 MINUTE ) >= UTC_TIMESTAMP()";
-                    $sql[] = "ORDER BY um.meta_value DESC";
-
-
-                    if ( $limit && $page )
-                            $sql['pagination'] = $wpdb->prepare( "LIMIT %d, %d", intval( ( $page - 1 ) * $limit), intval( $limit ) );
-
-                    /* Get paginated results */
-                    $paged_users_sql = apply_filters( 'bpchat_get_users_online_from_bp_sql', join( ' ', (array)$sql ), $sql );
-                    $paged_users     = $wpdb->get_col( $paged_users_sql );//we have user ids
-
-                    return $paged_users;
-            }
-
-
 
