@@ -47,7 +47,7 @@ class BP_Chat_Asset_Loader {
             if( bpchat_is_notification_sound_enabled( get_current_user_id() ) )
                 wp_enqueue_script( 'soundmanager', $base_url. 'assets/vendors/soundmanager/script/soundmanager2.js' );
 
-            wp_enqueue_script( 'chatjs', $base_url . 'assets/js/bpchat.js', array( 'jquery', 'json2' ) );
+            wp_enqueue_script( 'chatjs', $base_url . 'assets/js/bpchat.js', array( 'jquery', 'json2', 'jquery-effects-core' ) );
 			
 		}
     
