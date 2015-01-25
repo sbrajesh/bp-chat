@@ -97,6 +97,7 @@ class BP_Chat_Helper {
 			'core/channels/functions.php',
 			
 			'core/messages/class-message.php',
+			'core/messages/functions.php',
 			
 			'includes/bp-chat-ajax.php',
 			'includes/chat-bar.php',

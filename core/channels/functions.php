@@ -182,3 +182,23 @@ function bpchat_get_channels_for_user( $user_id ) {
 	
 	return $channels;
 }
+
+/**
+ * Get the ids of other users connected to this channel
+ * @global type $wpdb
+ * @param type $channel_id
+ * @return type
+ */
+function bpchat_get_other_party_ids( $channel_id ) {
+	
+  global $wpdb ;
+  
+  $bpchat = bp_chat();
+  
+  $user_id = get_current_user_id();
+
+  $query = "SELECT o.user_id FROM {$bpchat->table_name_channel_users} i, {$bpchat->table_name_channel_users} o where o.channel_id=i.channel_id AND i.user_id=%d";
+
+  $ids = $wpdb->get_results( $wpdb->prepare( $query, $user_id ) );
+  return $ids;
+}
