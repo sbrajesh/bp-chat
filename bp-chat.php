@@ -101,7 +101,7 @@ class BP_Chat_Helper {
 			
 			'includes/bp-chat-ajax.php',
 			'includes/chat-bar.php',
-			'includes/bp-chat-business-functions.php',
+			
 			'admin/install.php' 
 		);
 		
