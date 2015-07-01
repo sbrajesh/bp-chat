@@ -12,7 +12,7 @@ function bpchat_extend_messages( $messages, $uid = 'sender_id' ) {
     if( empty( $messages ) )
         return $messages;
 	
-	$message_count = count($msgs);
+	$message_count = count( $messages );
     
 	for ( $i = 0; $i < $message_count; $i++ ) {
 		
