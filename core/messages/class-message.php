@@ -1,10 +1,10 @@
 <?php
 
 /**
- * BPChat_Messages class to handle messages
+ * BP_Chat_Messages class to handle messages
  */
 
-class BPChat_Message {
+class BP_Chat_Message {
 
     var $id;
     var $sender_id;

@@ -139,7 +139,7 @@ class BPChatAjaxHelper {
 
 	public function save_messages () {
 		
-		$new_message = new BPChat_Message();
+		$new_message = new BP_Chat_Message();
 		
 		$new_message->message = esc_html( $_POST['message'] );
 		$new_message->channel_id = absint( $_POST['channel_id'] );
