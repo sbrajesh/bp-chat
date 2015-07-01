@@ -23,8 +23,11 @@ class BP_Chat_Actions {
     
     public static function get_instance(){
         
-        if( ! isset( self::$instance ) )
-                self::$instance = new self();
+        if( ! isset( self::$instance ) ) {
+         
+			self::$instance = new self();
+			
+		}
 		
         return self::$instance;
     }
@@ -32,8 +35,10 @@ class BP_Chat_Actions {
         //on login update table
     public function check_current_user() {
         
-		if( ! is_user_logged_in () )
-            return;//no need to process anymore
+		if( ! is_user_logged_in () ) {
+         
+			return;//no need to process anymore
+		}
 		
         $user_id = get_current_user_id();
 		
@@ -45,6 +50,7 @@ class BP_Chat_Actions {
     public function update_user_on_login( $user_login ) {
 		
          $user = new WP_User( $user_login );
+		 
          bpchat_login_user( $user->ID );
     }
 

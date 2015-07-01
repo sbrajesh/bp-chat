@@ -36,7 +36,7 @@ class BP_Chat_Helper {
 
 	/**
 	 * 
-	 * @return type
+	 * @return BP_Chat_Helper
 	 */
 	public static function get_instance(){
 		
@@ -76,9 +76,9 @@ class BP_Chat_Helper {
 	public function load() {
 		//if we are on a multisite environment and this is not the main site
 		//do not load this plugin
-		if( is_multisite() && ! is_main_site() )
+		if( is_multisite() && ! is_main_site() ) {
 			return;//do not load chat plugin
-		
+		}
 		
 		$path = $this->get_path();
 		
@@ -110,8 +110,10 @@ class BP_Chat_Helper {
 			
 		}
 		
-		foreach( $files as $file )
+		foreach( $files as $file ) {
+		
 			require_once $path . $file ;
+		}
 		
 		do_action( 'bpchat_loaded' );
 	}

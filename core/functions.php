@@ -18,11 +18,16 @@ function bpchat_get_all_options() {
 	);
 
 
-	if ( function_exists( 'bp_get_option' ) )
+	if ( function_exists( 'bp_get_option' ) ) {
+		
 		$options = bp_get_option( 'bpchat-settings', $default );
-	else
+		
+	} else {
+		
 		$options = get_option( 'bpchat-settings', $default );
-
+		
+	}
+	
 	return apply_filters( 'bpchat_settings', $options );
 }
 /**
@@ -32,11 +37,15 @@ function bpchat_get_all_options() {
  */
 function bpchat_save_options( $options ) {
 
-	if ( function_exists( 'bp_update_option' ) )
+	if ( function_exists( 'bp_update_option' ) ) {
+		
 		$callback	 = 'bp_update_option';
-	else
+		
+	} else {
+		
 		$callback	 = 'update_option';
-	//both function have same signature, so no need to worry
+		
+	}//both function have same signature, so no need to worry
 
 	return $callback( 'bpchat-settings', $options );
 }
@@ -93,7 +102,11 @@ function bpchat_get_notification_volume( $user_id ) {
 	
 }
 
-
+/**
+ * Check if the chat UI is disabled
+ * 
+ * @return type
+ */
 function bpchat_is_disabled() {
 	
 	return apply_filters( 'bpchat_is_disabled' ,  bpchat_get_option( 'is_disabled' ) );

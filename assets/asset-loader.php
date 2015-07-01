@@ -25,8 +25,10 @@ class BP_Chat_Asset_Loader {
 	 */
 	public static function get_instance() {
 		
-		if( ! isset( self::$instance ) )
+		if( ! isset( self::$instance ) ) {
+		
 			self::$instance = new self();
+		}	
 		
 		return self::$instance;
 	}
@@ -34,19 +36,24 @@ class BP_Chat_Asset_Loader {
 	
 	public function load_js() {
 		
-        if( bpchat_is_disabled() )
-            return;
+        if( bpchat_is_disabled() ) {
+         
+			return;
+		}	
 		//if user is online, load the javascript
         
         if( is_user_logged_in() && ! is_admin() ) {//has issues while loading on admin pages a 0 is appeneded still not sure why ?
             
-			$base_url = bp_chat()->get_url();
-            
+			$base_url = $this->url;
+            //enqueue poshy tip plugin
 			wp_enqueue_script( 'poshytip', $base_url . 'assets/vendors/tip/jquery.poshytip.js', array( 'jquery' ) );
-            
-            if( bpchat_is_notification_sound_enabled( get_current_user_id() ) )
-                wp_enqueue_script( 'soundmanager', $base_url. 'assets/vendors/soundmanager/script/soundmanager2.js' );
-
+            //load soundmanager js if sound is enabled
+            if( bpchat_is_notification_sound_enabled( get_current_user_id() ) ) {
+             
+				wp_enqueue_script( 'soundmanager', $base_url. 'assets/vendors/soundmanager/script/soundmanager2.js' );
+				
+			}
+			
             wp_enqueue_script( 'chatjs', $base_url . 'assets/js/bpchat.js', array( 'jquery', 'json2', 'jquery-effects-core' ) );
 			
 		}
@@ -55,12 +62,13 @@ class BP_Chat_Asset_Loader {
 	
 	public function load_css() {
 		
-        if( bpchat_is_disabled () )
+        if( bpchat_is_disabled () ) {
             return;
-         
+		} 
+		
         if( is_user_logged_in() ) {
             
-			$url =  bp_chat()->get_url() . 'assets/css/chat.css';
+			$url = $this->url . 'assets/css/chat.css';
 			
             wp_enqueue_style( 'chatcss', $url );
         }
@@ -69,9 +77,9 @@ class BP_Chat_Asset_Loader {
 
     public function load_soundmanager_js() {
         
-        if( ! is_user_logged_in() || bpchat_is_disabled() )//allow to disable for mobile browsers
+        if( ! is_user_logged_in() || bpchat_is_disabled() ) {//allow to disable for mobile browsers
             return;//do not bother if the user is not logged in
-
+		}	
 		?>
     
 	<script type="text/javascript">

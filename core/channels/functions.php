@@ -5,7 +5,7 @@
  * @param int $channel_id
  * @return BP_Chat_Channel
  */
-function bpchat_get_channel( $channel_id ) {
+function bpchat_get_channel_by_id( $channel_id ) {
 
 	if( $channel = wp_cache_get( 'bp-chat-channel-' . $channel_id, 'bpchat' ) ) {
 
@@ -16,7 +16,7 @@ function bpchat_get_channel( $channel_id ) {
 	
 	if( ! empty( $channel ) ) {
 		
-		wp_cache_set('bp-chat-channel-' . $channel_id, $channel, 'bpchat' );
+		wp_cache_set( 'bp-chat-channel-' . $channel_id, $channel, 'bpchat' );
 		
 	}
 	
@@ -48,12 +48,12 @@ function bpchat_obtain_channel( $from_user_id, $to_user_id ) {
 function bpchat_create_channel( $args ) {
 
 	$default =  array(
-					'initiator_id'	=> '',
-					'invited_id'	=> '',
-					'is_multichat'	=> 0,//is one to one connection
-					'is_open'		=> true,//connection is requested so channel is open
-					'status'		=> 'initiated'
-				);
+		'initiator_id'	=> '',
+		'invited_id'	=> '',
+		'is_multichat'	=> 0,//is one to one connection
+		'is_open'		=> true,//connection is requested so channel is open
+		'status'		=> 'initiated'
+	);
 
 		
 	$arg = wp_parse_args( $args, $default );
@@ -98,7 +98,7 @@ function bpchat_is_channel_open( $channel_id ) {
 
 function bpchat_is_channel_multichat( $channel_id ) {
 	
-	$channel = bpchat_get_channel( $channel_id );
+	$channel = bpchat_get_channel_by_id( $channel_id );
 	
 	return $channel->is_multichat;
 }

@@ -27,8 +27,9 @@ function bpchat_get_user_state( $user_id ) {
 	
 	$state = bp_get_user_meta( $user_id, 'bpchat_state',  true );
 	
-	if( empty( $state ) )
+	if( empty( $state ) ) {
 		$state = 'offline';//if no state is set, the user is offline
+	}
 	
 	return $state;
 }
@@ -42,8 +43,10 @@ function bpchat_get_user_state( $user_id ) {
 function bpchat_update_user_state( $user_id, $state ) {
 	
 	$all_status = bpchat_get_all_user_states();
-	if( empty( $state ) || ! is_string( $state ) || ! isset( $all_status[$state] ) )
-		return ;
+	
+	if( empty( $state ) || ! is_string( $state ) || ! isset( $all_status[$state] ) ) {
+		return false;
+	}
 	
 	bp_update_user_meta( $user_id, 'bpchat_state', $state );
 }
@@ -55,13 +58,16 @@ function bpchat_update_user_state( $user_id, $state ) {
  */
 function bpchat_get_user_state_label( $state ) {
 	
-	if( empty( $state ) )
+	if( empty( $state ) ) {
 		return '';
+	}	
 	
 	$all_states = bpchat_get_all_user_states();
 	
-	if( isset( $all_states[$state] ) )
-			return $all_states[$state];
+	if( isset( $all_states[ $state ] ) ) {
+	
+		return $all_states[$state];
+	}	
 	
 	return __( 'Unknown', 'bp-chat' );
 	
@@ -139,8 +145,9 @@ function bpchat_has_friends_only_enabled( $user_id ) {
 	
 	$enabled = false;
 	
-	if( bpchat_get_user_chat_preference( $user_id ) == 'friends' )
+	if( bpchat_get_user_chat_preference( $user_id ) == 'friends' ) {
 			$enabled = true;
+	}		
 	
    return apply_filters( 'bpchat_has_friend_only_enabled', $enabled, $user_id  );
 }
@@ -231,7 +238,8 @@ function bpchat_get_online_user_query_args( $limit = null, $page = 1 ) {
 		
 	return $user_query_args;	
 }
-function bpchat_get_online_users(  ) {
+
+function bpchat_get_online_users() {
 
 	$user_query = new WP_User_Query( bpchat_get_online_user_query_args() );//BP_User_Query will not work because of it's use of user_ids clause
 	
@@ -241,12 +249,15 @@ function bpchat_get_online_users(  ) {
 
 function bpchat_get_online_users_count() {
 	
-	if( !is_user_logged_in() )
+	if( ! is_user_logged_in() ) {
 		return 0;
+	}	
 	
 	$args = bpchat_get_online_user_query_args();
+	
 	$args['count_total'] = true;
 	$args['fields'] = 'ID';//
+	
 	$user_query = new WP_User_Query( $args );
 	
 	return $user_query->get_total();
@@ -256,11 +267,8 @@ function bpchat_get_online_users_list( $echo = true ) {
 
     $users = bpchat_get_online_users( null, 0 ); //$users;
    
-    
-
     $html = '';
 	
-    
     foreach ( (array) $users as $user ) {
 		
         $html .= "<div class='friend_list_item'>";
@@ -278,7 +286,11 @@ function bpchat_get_online_users_list( $echo = true ) {
   
 }
 
-
+/**
+ * Mark users idle if the user is not active for last 2 minutes
+ * 
+ * @global type $wpdb
+ */
 function bpchat_mark_users_idle() {
 
 	      //any user who did not fetch the message for last time, means he has closed the browser or has a network disconnection or has logged out, sio let us clean the table
