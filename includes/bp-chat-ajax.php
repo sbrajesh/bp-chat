@@ -161,7 +161,13 @@ function get_updates_for_user() {
     $q = $wpdb->prepare($query, $user_id);
 
     $messages = $wpdb->get_results($q); //array of message objects
-     $time= current_time( 'timestamp' );
+    $time= current_time( 'timestamp' );
+    
+    foreach ( $messages as $message ){
+		$user_info = get_userdata($message->sender_id);
+		$message->name = $user_info->user_login;
+    }
+     
     $messages = bpchat_extend_messages($messages);
 
     $query_status = "SELECT c.channel_id,c.status, c.user_id,u.is_online,IF (DATE_ADD( u.last_active_time, INTERVAL 30 SECOND ) >= NOW(), 'active','idle') as user_status  FROM {$bpchat->table_name_channel_users} c,{$bpchat->table_name_users} u WHERE c.channel_id IN( SELECT channel_id FROM {$bpchat->table_name_channel_users} where user_id=%d and status <> 'closed') AND c.user_id!=%d and u.user_id=c.user_id ORDER BY channel_id DESC ";
