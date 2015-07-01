@@ -3,7 +3,7 @@
  * Get a chnnel object identified by id
  * 
  * @param int $channel_id
- * @return BPChat_Channel
+ * @return BP_Chat_Channel
  */
 function bpchat_get_channel( $channel_id ) {
 
@@ -12,7 +12,7 @@ function bpchat_get_channel( $channel_id ) {
 		return $channel;
 	}
 	
-	$channel = new BPChat_Channel( $channel_id );
+	$channel = new BP_Chat_Channel( $channel_id );
 	
 	if( ! empty( $channel ) ) {
 		
@@ -34,7 +34,7 @@ function bpchat_get_channel( $channel_id ) {
  */
 function bpchat_obtain_channel( $from_user_id, $to_user_id ) {
 	
-	 if( $channel_id =  BPChat_Channel::get_channel_between( $from_user_id, $to_user_id ) )
+	 if( $channel_id =  BP_Chat_Channel::get_channel_between( $from_user_id, $to_user_id ) )
 			return $channel_id;
 	 else
 			return bpchat_create_channel( array( 'initiator_id' => $from_user_id, 'invited_id' => $to_user_id ) );
@@ -60,7 +60,7 @@ function bpchat_create_channel( $args ) {
 	
 	extract( $arg );
 	
-	$channel				= new BPChat_Channel();//create a new channel
+	$channel				= new BP_Chat_Channel();//create a new channel
 	$channel->status		= $status;
 	$channel->is_open		= $is_open;
 	$channel->is_multichat	= $is_multichat;
@@ -85,7 +85,7 @@ function bpchat_create_channel( $args ) {
 
 function bpchat_close_channel( $channel_id ) {
 	
-	return BPChat_Channel::close( $channel_id );//close channel
+	return BP_Chat_Channel::close( $channel_id );//close channel
 }
 
 function bpchat_is_channel_idle( $channel_id ) {
@@ -106,34 +106,34 @@ function bpchat_is_channel_multichat( $channel_id ) {
 	
 function bpchat_add_channel_user( $channel_id, $user_id, $status ) {
 	
-	return BPChat_Channel::add_user( $channel_id, $user_id, $status );
+	return BP_Chat_Channel::add_user( $channel_id, $user_id, $status );
 }
        
 
 function bpchat_remove_channel_user( $channel_id, $user_id ) {
 	
-   return BPChat_Channel::remove_user( $channel_id, $user_id );
+   return BP_Chat_Channel::remove_user( $channel_id, $user_id );
 }
 
 function bpchat_close_channel_for_user( $channel_id, $user_id ) {
 	
-	return BPChat_Channel::close_channel_for_user( $channel_id, $user_id );
+	return BP_Chat_Channel::close_channel_for_user( $channel_id, $user_id );
 }
 
 function bpchat_update_channel_user( $channel_id, $user_id, $status ) {
 	
-	 return BPChat_Channel::update_user( $channel_id, $user_id, $status );
+	 return BP_Chat_Channel::update_user( $channel_id, $user_id, $status );
 }
 
 function  bpchat_update_all_channel_user( $channel_id, $status ) {
 	
-	return BPChat_Channel::update_channel_for_all( $channel_id, $status );
+	return BP_Chat_Channel::update_channel_for_all( $channel_id, $status );
 }
 
 
 function bpchat_get_channel_users( $channel_id ) {
 	
-	$users = BPChat_Channel::get_all_users( $channel_id );
+	$users = BP_Chat_Channel::get_all_users( $channel_id );
 	
 	return apply_filters( 'bpchat_get_channel_users', $users, $channel_id );
 }
@@ -148,7 +148,7 @@ function bpchat_get_channel_users( $channel_id ) {
 
 function bpchat_get_channel_messages( $channel_id ) {
 	
-	$messages = BPChat_Channel::get_all_messages( $channel_id );
+	$messages = BP_Chat_Channel::get_all_messages( $channel_id );
 	
 	$messages = bpchat_extend_messages( $messages );
 	
@@ -164,7 +164,7 @@ function bpchat_get_channel_messages( $channel_id ) {
  */
 function bpchat_get_recent_channel_messages( $channel_id, $time ) {
 	
-	$messages = BPChat_Channel::get_messages_after( $time );
+	$messages = BP_Chat_Channel::get_messages_after( $time );
 	
 	$messages = bpchat_extend_messages( $messages );
 	
@@ -178,7 +178,7 @@ function bpchat_get_recent_channel_messages( $channel_id, $time ) {
  */
 function bpchat_get_channels_for_user( $user_id ) {
 	
-	$channels = BPChat_Channel::get_open_channel_for_user( $user_id );
+	$channels = BP_Chat_Channel::get_open_channel_for_user( $user_id );
 	
 	return $channels;
 }

@@ -1,7 +1,7 @@
 <?php
 
 ///channel class
-class BPChat_Channel {
+class BP_Chat_Channel {
 
 	var $is_open = false;
 	var $is_private = true;
