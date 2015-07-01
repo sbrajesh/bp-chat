@@ -2,7 +2,9 @@
 //ajax binding
 class BPChatAjaxHelper{
     private static $instance;
-    function __construct(){
+	
+	
+    private function __construct(){
 
         //send updated online users list
         add_action('wp_ajax_bpchat_update_online_users_list', array($this,'show_online_users_list'));
@@ -29,7 +31,7 @@ class BPChatAjaxHelper{
     }
 
 
-     function get_instance(){
+    public static function get_instance(){
         if(!isset(self::$instance))
                 self::$instance=new self();
         return self::$instance;
