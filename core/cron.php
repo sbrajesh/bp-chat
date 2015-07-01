@@ -1,5 +1,5 @@
 <?php
-class BPChatCronHelper{
+class BP_Chat_Cron_Helper{
    
     private static $instance;
     private function __construct(){
@@ -74,4 +74,4 @@ class BPChatCronHelper{
 }//end of class
 
 //instantiate cron helper
-BPChatCronHelper::get_instance();
+BP_Chat_Cron_Helper::get_instance();
