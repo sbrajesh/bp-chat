@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Bp Chat
+Plugin Name: BP Chat
 Plugin URI: http://buddydev.com/plugins/bp-chat/
 Description:  just a begining, this beta version just showcases some of the features, More features coming by end of March 2011
 Version: 1.1 trunk
