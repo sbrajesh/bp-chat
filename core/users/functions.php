@@ -266,8 +266,8 @@ function bpchat_get_online_user_query_args( $limit = null, $page = 1 ) {
 		
 		array(
 			'key'	=> 'bpchat_state',
-			'value' => 'offline',
-			'compare'	=> '!='
+			'value' => array( 'online', 'idle', 'busy', 'away' ),
+			'compare'	=> 'IN'
 		),
 		
 	);
@@ -279,7 +279,7 @@ function bpchat_get_online_user_query_args( $limit = null, $page = 1 ) {
 	
 	if( $user_id ) {
 		
-		$user_query_args['exclude'] = $user_id;
+		$user_query_args['exclude'] = (array) $user_id;
 	}	
 		
 	$chat_buddy_prefernce = bpchat_get_user_chat_preference( $user_id );
@@ -293,7 +293,7 @@ function bpchat_get_online_user_query_args( $limit = null, $page = 1 ) {
 		
 	$user_query_args = apply_filters( 'bp_chat_online_users_query_args', $user_query_args );
 		
-		
+	
 	return $user_query_args;	
 }
 /**
