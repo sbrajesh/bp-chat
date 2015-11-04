@@ -153,7 +153,7 @@ class BPChatAjaxHelper {
 		//update senders last activity time
 		bpchat_update_last_active( $new_message->sender_id ); //update last active time for sender
 
-		echo json_encode( array( 'name' => bp_get_loggedin_user_fullname(), 'id' => $new_message->id ) );
+		echo json_encode( array( 'name' => bp_core_get_user_displayname( get_current_user_id() ), 'id' => $new_message->id ) );
 
 		exit( 0 );
 	}
