@@ -6,7 +6,7 @@ class BP_Chat_Cron_Helper{
     private function __construct() {
         
        add_action( 'bpchat_user_status_monitor', array( $this, 'user_status_monitor' ) );
-       add_action( 'bpchat_user_status_monitor', array( $this, 'user_status_monitor' ) );
+      // add_action( 'bpchat_user_status_monitor', array( $this, 'user_status_monitor' ) );
       
        /*cron job scheduling for fixing the logout issue*/
 	   
@@ -19,7 +19,7 @@ class BP_Chat_Cron_Helper{
 	   /**
 	    * @todo move it out
 	    * It will have no effect
-	    * as the deactivation hook gets cal;led before plugins_loaded
+	    * as the deactivation hook gets callled before plugins_loaded
 	    * 
 	    */
 		//register deactivation of scheduled event

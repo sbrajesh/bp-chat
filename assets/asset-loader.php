@@ -42,7 +42,7 @@ class BP_Chat_Asset_Loader {
 		}	
 		//if user is online, load the javascript
         
-        if( is_user_logged_in() && ! is_admin() ) {//has issues while loading on admin pages a 0 is appeneded still not sure why ?
+        if( is_user_logged_in() && ! is_admin() ) {//
             
 			$base_url = $this->url;
             //enqueue poshy tip plugin

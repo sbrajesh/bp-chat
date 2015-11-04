@@ -2,6 +2,8 @@
 /**
  * Get all possible user states
  * 
+ * @since 1.1.0
+ * 
  * @return type
  */
 function bpchat_get_all_user_states() {
@@ -19,7 +21,11 @@ function bpchat_get_all_user_states() {
 }
 /**
  * Get the user state key
- * Possible values are online,|away|offline|busy
+ * 
+ * Possible values are online|away|offline|busy
+ * 
+ * @since 1.1.0
+ * 
  * @param type $user_id
  * @return string
  */
@@ -34,7 +40,9 @@ function bpchat_get_user_state( $user_id ) {
 	return $state;
 }
 /**
- * Update User state
+ * Update user state
+ * 
+ * @since 1.1.0
  * 
  * @param type $user_id
  * @param type $state possible values online|offline|busy|away
@@ -52,6 +60,8 @@ function bpchat_update_user_state( $user_id, $state ) {
 }
 /**
  * Get the label for current user state
+ * 
+ * @since 1.1.0
  * 
  * @param type $state
  * @return string
@@ -75,6 +85,8 @@ function bpchat_get_user_state_label( $state ) {
 /**
  * Get the user status message
  * 
+ * @since 1.1.0
+ * 
  * @param type $user_id
  * @return type
  */
@@ -84,6 +96,8 @@ function bpchat_get_user_status_message( $user_id ) {
 }
 /**
  * Set User status message 
+ * 
+ * @since 1.1.0
  * 
  * @param type $user_id
  * @param type $message
@@ -95,6 +109,8 @@ function bpchat_update_user_status_message( $user_id, $message ) {
 }
 /**
  * Clear a user status message
+ * 
+ * @since 1.1.0
  * 
  * @param type $user_id
  * @return type
@@ -152,7 +168,13 @@ function bpchat_has_friends_only_enabled( $user_id ) {
    return apply_filters( 'bpchat_has_friend_only_enabled', $enabled, $user_id  );
 }
 
-
+/**
+ * Updates last active time for the given user
+ * 
+ * @since 1.1.0
+ * @param type $user_id
+ * @return type
+ */
 function bpchat_update_last_active( $user_id ) {
 	
 	$current_time = current_time( 'timestamp' );
@@ -160,13 +182,27 @@ function bpchat_update_last_active( $user_id ) {
 	return bp_update_user_meta( $user_id, 'bpchat_last_active', $current_time );
 	
 }
-
+/**
+ * Get the last active time as timestamp for the current user
+ * 
+ * @since 1.1.0
+ * 
+ * @param type $user_id
+ * @return type
+ */
 function bpchat_get_last_active( $user_id ) {
 	
 	return  bp_get_user_meta( $user_id, 'bpchat_last_active', true );
 	
 }
-
+/**
+ * Update When the last time a fetch request was made?
+ * 
+ * @since 1.1.0
+ * 
+ * @param type $user_id
+ * @return type
+ */
 function bpchat_update_fetch_time( $user_id ) {
 	
 	$current_time = current_time( 'timestamp' );
@@ -174,27 +210,49 @@ function bpchat_update_fetch_time( $user_id ) {
 	return bp_update_user_meta( $user_id, 'bpchat_last_fetch_time', $current_time );
 
 }
-
+/**
+ * Get when last fetch mesage was called
+ * 
+ * @param type $user_id
+ * @return type
+ */
 function bpchat_get_last_fetch_time( $user_id ) {
 	
 	return bp_get_user_meta( $user_id, 'bpchat_last_fetch_time', true );
 }
 
 
-/* logout a user from chat session*/
+/**
+ * Mark a user as offline
+ * 
+ * @param type $user_id
+ * @return type
+ */
 function bpchat_logout_user( $user_id ) {
 	
 	return bpchat_update_user_state( $user_id, 'offline' );
 	
 }
-
+/**
+ * Mark a user online
+ * 
+ * @param type $user_id
+ * @return type
+ */
 function bpchat_login_user( $user_id ) {
 	
 	bpchat_update_last_active( $user_id );//update last active time
 	
 	return bpchat_update_user_state( $user_id, 'online' );//may be we should remember the last state?
 }
-
+/**
+ * @since 1.1.0
+ * 
+ * @internal Used for generating the query args to fetch online users
+ * @param type $limit
+ * @param type $page
+ * @return type
+ */
 function bpchat_get_online_user_query_args( $limit = null, $page = 1 ) {
 
 	$user_query_args = array(
@@ -238,7 +296,12 @@ function bpchat_get_online_user_query_args( $limit = null, $page = 1 ) {
 		
 	return $user_query_args;	
 }
-
+/**
+ * @since 1.0.0
+ * @since 1.1.0 implementation changed to use Wp_Query
+ * 
+ * @return type
+ */
 function bpchat_get_online_users() {
 
 	$user_query = new WP_User_Query( bpchat_get_online_user_query_args() );//BP_User_Query will not work because of it's use of user_ids clause
@@ -288,6 +351,8 @@ function bpchat_get_online_users_list( $echo = true ) {
 
 /**
  * Mark users idle if the user is not active for last 2 minutes
+ * @since 1.0.0
+ * @since 1.1.0 updated to use usermeta table
  * 
  * @global type $wpdb
  */

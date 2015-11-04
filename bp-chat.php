@@ -38,10 +38,11 @@ class BP_Chat_Helper {
 	 * 
 	 * @return BP_Chat_Helper
 	 */
-	public static function get_instance(){
+	public static function get_instance() {
 		
-		if( ! isset( self:: $instance ) )
+		if( ! isset( self:: $instance ) ) {
 			self::$instance = new self();
+		}
 		
 		return self::$instance;
 		

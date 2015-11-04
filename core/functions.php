@@ -3,6 +3,8 @@
 /**
  * @todo make independent of BP
  * 
+ * @since 1.1.0
+ * 
  * @return array
  */
 function bpchat_get_all_options() {
@@ -51,7 +53,7 @@ function bpchat_save_options( $options ) {
 }
 
 /**
- * Get the BP Chat settings for a perticular option
+ * Get the BP Chat settings for the given option
  * 
  * @param string $option the name of the chat specific option 
  * @return mixed (array|int|string) depending on the option  
@@ -67,8 +69,10 @@ function bpchat_get_option( $option ) {
 /**
  * Update individual Chat option and save that to database( in options table )
  * 
- * @param type $option_name
- * @param type $value
+ * @since 1.0.0 
+ * 
+ * @param string $option_name
+ * @param mixed $value
  */
 function bpchat_update_option( $option_name, $value ) {
 
@@ -82,6 +86,8 @@ function bpchat_update_option( $option_name, $value ) {
 /**
  * Is notification sound enabled?
  * 
+ * @since 1.0.0
+ * 
  * @param type $user_id
  * @return type
  */
@@ -92,6 +98,8 @@ function bpchat_is_notification_sound_enabled( $user_id ) {
 }
 /**
  * Get teh volume for notification sound
+ * 
+ * @since 1.0.0
  * 
  * @param type $user_id
  * @return type
@@ -104,6 +112,8 @@ function bpchat_get_notification_volume( $user_id ) {
 
 /**
  * Check if the chat UI is disabled
+ * 
+ * @since 1.0.0
  * 
  * @return type
  */
